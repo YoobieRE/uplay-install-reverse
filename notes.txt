@@ -33,7 +33,7 @@ Major version indicator
 1.4.02: 19 00
 
 
-
+GZIP header: https://github.com/google/compact_enc_det/blob/master/compact_enc_det/compact_enc_det.cc#L2295
 0x00000164
         04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 1.0.00: 78 DA 9C 9C 75 40 55 59 F7 F7 69 29
