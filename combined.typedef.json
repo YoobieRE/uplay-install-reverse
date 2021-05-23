@@ -181,7 +181,75 @@
         "name": ""
       }
     },
-    "name": ""
+    "name": "",
+    "alt_typedefs": {
+      "1": {
+        "1": {
+          "type": "int",
+          "name": ""
+        },
+        "2": {
+          "type": "int",
+          "name": ""
+        },
+        "3": {
+          "type": "message",
+          "message_typedef": {
+            "1": {
+              "type": "str",
+              "name": "fileName"
+            },
+            "2": {
+              "type": "int",
+              "name": "size"
+            },
+            "3": {
+              "type": "int",
+              "name": ""
+            },
+            "4": {
+              "type": "bytes",
+              "name": ""
+            },
+            "6": {
+              "type": "int",
+              "name": ""
+            },
+            "7": {
+              "type": "message",
+              "message_typedef": {
+                "1": {
+                  "type": "int",
+                  "name": "partSize"
+                },
+                "2": {
+                  "type": "int",
+                  "name": ""
+                },
+                "3": {
+                  "type": "bytes",
+                  "name": "partId"
+                }
+              },
+              "name": "fileDef"
+            }
+          },
+          "name": ""
+        },
+        "5": {
+          "type": "bytes",
+          "name": ""
+        },
+        "7": {
+          "type": "bytes",
+          "name": ""
+        },
+        "8": {
+          "type": "int",
+          "name": ""
+        }
+      }
+    }
   },
   "5": {
     "type": "message",

@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 blackboxprotobuf = "*"
 protobuf-inspector = "*"
-hexdump = "*"
+protobuf = "*"
 
 [dev-packages]
 autopep8 = "*"
