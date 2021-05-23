@@ -1,0 +1,51 @@
+"C:\Program Files (x86)\Ubisoft\Ubisoft Game Launcher\UplayService.exe" -upc_uplay_id 3353 -uplayservice_perform_initial_install -uplayservice_game_name "Watch Dogs Legion" -uplayservice_icon_filename "C:/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/data/games/3e71665ae92b94b9e9d7adac07d831a5.ico" -uplayservice_publisher "Ubisoft" -uplayservice_help_url https://support.ubi.com -uplayservice_about_url http://www.ubisoft.com/
+
+0x000000008
+???
+1.0.00: D9 26
+1.0.10: AF CC
+1.1.00: 77 C9
+1.2.00: 20 B3
+1.2.20: FD B2
+1.2.30: FA B5
+1.2.40: 56 B3
+1.3.00: C5 3F
+1.3.22: 77 7A
+1.3.25: 67 7D
+1.3.30: B7 7D
+1.4.00: 15 BE
+1.4.02: 88 9F
+
+0x00000000A
+Major version indicator
+1.0.00: 16 00
+1.0.10: 16 00
+1.1.00: 16 00
+1.2.00: 16 00
+1.2.20: 16 00
+1.2.30: 16 00
+1.2.40: 16 00
+1.3.00: 18 00
+1.3.22: 18 00
+1.3.25: 18 00
+1.3.30: 18 00
+1.4.00: 19 00
+1.4.02: 19 00
+
+
+
+0x00000164
+        04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+1.0.00: 78 DA 9C 9C 75 40 55 59 F7 F7 69 29
+1.0.10: 78 DA 9C BB 75 40 D5 5B B4 EF 4B 49
+1.1.00: 78 DA A4 BB 75 40 95 5D B7 EE 0D 82
+1.2.00: 78 DA A4 BB 75 40 55 5D BB EE 4D 89
+1.2.20: 78 DA A4 9A 75 58 55 5D D7 AF E9 6E
+1.2.30: 78 DA A4 9B 75 58 94 5F D7 EF 29 69
+1.2.40: 78 DA A4 7B 75 58 54 5F DB 2E 48 8A
+1.3.00: 78 DA A4 BB 75 58 55 DD D7 EF 0D 12
+1.3.22: 78 DA A4 9B 75 58 94 5F D7 EF 69 90
+1.3.25: 78 DA A4 BB 75 58 95 DB D7 EF 0D 82
+1.3.30: 78 DA A4 9B 75 5C 95 4D D7 EF 41 BA
+1.4.00: 78 DA A4 BB 75 58 94 DD DB 2E 4C 77
+1.4.02: 78 DA A4 9B 75 5C 94 DB F7 EF 01 41
