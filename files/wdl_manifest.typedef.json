@@ -1,0 +1,307 @@
+{
+  "1": {
+    "type": "message",
+    "message_typedef": {
+      "1": {
+        "type": "bytes",
+        "name": ""
+      },
+      "2": {
+        "type": "int",
+        "name": ""
+      },
+      "3": {
+        "type": "message",
+        "message_typedef": {
+          "1": {
+            "type": "message",
+            "message_typedef": {
+              "12": {
+                "type": "fixed32",
+                "name": ""
+              }
+            },
+            "name": ""
+          },
+          "2": {
+            "type": "bytes",
+            "name": ""
+          }
+        },
+        "name": "",
+        "alt_typedefs": {
+          "1": {
+            "1": {
+              "type": "bytes",
+              "name": ""
+            },
+            "2": {
+              "type": "bytes",
+              "name": ""
+            }
+          }
+        }
+      },
+      "4": {
+        "type": "int",
+        "name": ""
+      }
+    },
+    "name": ""
+  },
+  "2": {
+    "type": "message",
+    "message_typedef": {
+      "1": {
+        "type": "bytes",
+        "name": ""
+      },
+      "2": {
+        "type": "bytes",
+        "name": ""
+      },
+      "3": {
+        "type": "bytes",
+        "name": ""
+      },
+      "4": {
+        "type": "bytes",
+        "name": ""
+      },
+      "5": {
+        "type": "bytes",
+        "name": ""
+      },
+      "6": {
+        "type": "int",
+        "name": ""
+      },
+      "9": {
+        "type": "int",
+        "name": ""
+      },
+      "10": {
+        "type": "int",
+        "name": ""
+      }
+    },
+    "name": ""
+  },
+  "4": {
+    "type": "message",
+    "message_typedef": {
+      "1": {
+        "type": "int",
+        "name": ""
+      },
+      "2": {
+        "type": "int",
+        "name": ""
+      },
+      "3": {
+        "type": "message",
+        "message_typedef": {
+          "1": {
+            "type": "bytes",
+            "name": ""
+          },
+          "2": {
+            "type": "int",
+            "name": ""
+          },
+          "3": {
+            "type": "int",
+            "name": ""
+          },
+          "4": {
+            "type": "bytes",
+            "name": ""
+          },
+          "6": {
+            "type": "int",
+            "name": ""
+          },
+          "7": {
+            "type": "message",
+            "message_typedef": {
+              "1": {
+                "type": "int",
+                "name": ""
+              },
+              "2": {
+                "type": "int",
+                "name": ""
+              },
+              "3": {
+                "type": "bytes",
+                "name": ""
+              }
+            },
+            "name": ""
+          }
+        },
+        "name": ""
+      },
+      "5": {
+        "type": "bytes",
+        "name": ""
+      },
+      "7": {
+        "type": "bytes",
+        "name": ""
+      },
+      "8": {
+        "type": "int",
+        "name": ""
+      }
+    },
+    "name": ""
+  },
+  "5": {
+    "type": "message",
+    "message_typedef": {
+      "1": {
+        "type": "bytes",
+        "name": ""
+      },
+      "2": {
+        "type": "int",
+        "name": ""
+      },
+      "3": {
+        "type": "message",
+        "message_typedef": {
+          "1": {
+            "type": "bytes",
+            "name": ""
+          },
+          "2": {
+            "type": "message",
+            "message_typedef": {
+              "12": {
+                "type": "fixed32",
+                "name": ""
+              }
+            },
+            "name": ""
+          }
+        },
+        "name": "",
+        "alt_typedefs": {
+          "1": {
+            "1": {
+              "type": "bytes",
+              "name": ""
+            },
+            "2": {
+              "type": "bytes",
+              "name": ""
+            }
+          }
+        }
+      }
+    },
+    "name": ""
+  },
+  "6": {
+    "type": "message",
+    "message_typedef": {
+      "1": {
+        "type": "bytes",
+        "name": ""
+      }
+    },
+    "name": ""
+  },
+  "8": {
+    "type": "int",
+    "name": ""
+  },
+  "10": {
+    "type": "message",
+    "message_typedef": {
+      "1": {
+        "type": "bytes",
+        "name": ""
+      },
+      "2": {
+        "type": "bytes",
+        "name": ""
+      },
+      "3": {
+        "type": "int",
+        "name": ""
+      },
+      "4": {
+        "type": "int",
+        "name": ""
+      },
+      "6": {
+        "type": "int",
+        "name": ""
+      }
+    },
+    "name": ""
+  },
+  "12": {
+    "type": "message",
+    "message_typedef": {},
+    "name": ""
+  },
+  "14": {
+    "type": "int",
+    "name": ""
+  },
+  "15": {
+    "type": "int",
+    "name": ""
+  },
+  "16": {
+    "type": "int",
+    "name": ""
+  },
+  "17": {
+    "type": "int",
+    "name": ""
+  },
+  "21": {
+    "type": "int",
+    "name": ""
+  },
+  "22": {
+    "type": "int",
+    "name": ""
+  },
+  "23": {
+    "type": "message",
+    "message_typedef": {
+      "1": {
+        "type": "message",
+        "message_typedef": {
+          "12": {
+            "type": "fixed32",
+            "name": ""
+          }
+        },
+        "name": ""
+      },
+      "2": {
+        "type": "int",
+        "name": ""
+      }
+    },
+    "name": "",
+    "alt_typedefs": {
+      "1": {
+        "1": {
+          "type": "bytes",
+          "name": ""
+        },
+        "2": {
+          "type": "int",
+          "name": ""
+        }
+      }
+    }
+  }
+}
