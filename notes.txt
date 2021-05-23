@@ -1,5 +1,11 @@
 "C:\Program Files (x86)\Ubisoft\Ubisoft Game Launcher\UplayService.exe" -upc_uplay_id 3353 -uplayservice_perform_initial_install -uplayservice_game_name "Watch Dogs Legion" -uplayservice_icon_filename "C:/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/data/games/3e71665ae92b94b9e9d7adac07d831a5.ico" -uplayservice_publisher "Ubisoft" -uplayservice_help_url https://support.ubi.com -uplayservice_about_url http://www.ubisoft.com/
 
+http://uplaypc-s-ubisoft.cdn.ubi.com/uplaypc/downloads/3515/slices_v3/d/4D6EB1E526D38615545462D425D723CD53EA6C51
+        ?_tkn_=exp=1621790115
+        ~acl=%2fuplaypc%2fdownloads%2f3515%2fslices_v3%2fd%2f4D6EB1E526D38615545462D425D723CD53EA6C51
+        ~data=e0ef48e3-1a89-419e-80c8-a008ef16379a
+        ~hmac=8ac6adf9e358dde281c067425a5782a9f90ff57169e9cdbb5494fc48fba07dda
+
 0x000000008
 ???
 1.0.00: D9 26
