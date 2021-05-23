@@ -3,12 +3,12 @@
     "type": "message",
     "message_typedef": {
       "1": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "eulaType"
       },
       "2": {
         "type": "int",
-        "name": ""
+        "name": "status"
       },
       "3": {
         "type": "message",
@@ -32,8 +32,8 @@
         "alt_typedefs": {
           "1": {
             "1": {
-              "type": "bytes",
-              "name": ""
+              "type": "str",
+              "name": "lang"
             },
             "2": {
               "type": "bytes",
@@ -47,30 +47,30 @@
         "name": ""
       }
     },
-    "name": ""
+    "name": "eulas"
   },
   "2": {
     "type": "message",
     "message_typedef": {
       "1": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "filePath"
       },
       "2": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "fileDir"
       },
       "3": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "args"
       },
       "4": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "title"
       },
       "5": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "name"
       },
       "6": {
         "type": "int",
@@ -95,23 +95,23 @@
     "type": "message",
     "message_typedef": {
       "1": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "filePath"
       },
       "2": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "fileDir"
       },
       "3": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "args"
       },
       "5": {
         "type": "int",
         "name": ""
       }
     },
-    "name": ""
+    "name": "uninstallFiles"
   },
   "4": {
     "type": "message",
@@ -128,12 +128,12 @@
         "type": "message",
         "message_typedef": {
           "1": {
-            "type": "bytes",
-            "name": ""
+            "type": "str",
+            "name": "fileName"
           },
           "2": {
             "type": "int",
-            "name": ""
+            "name": "size"
           },
           "3": {
             "type": "int",
@@ -152,7 +152,7 @@
             "message_typedef": {
               "1": {
                 "type": "int",
-                "name": ""
+                "name": "partSize"
               },
               "2": {
                 "type": "int",
@@ -160,13 +160,13 @@
               },
               "3": {
                 "type": "bytes",
-                "name": ""
+                "name": "partId"
               }
             },
-            "name": ""
+            "name": "parts"
           }
         },
-        "name": ""
+        "name": "fileDef"
       },
       "5": {
         "type": "bytes",
@@ -187,8 +187,8 @@
     "type": "message",
     "message_typedef": {
       "1": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "registryPath"
       },
       "2": {
         "type": "int",
@@ -198,8 +198,8 @@
         "type": "message",
         "message_typedef": {
           "1": {
-            "type": "bytes",
-            "name": ""
+            "type": "str",
+            "name": "value"
           },
           "2": {
             "type": "message",
@@ -216,12 +216,12 @@
         "alt_typedefs": {
           "1": {
             "1": {
-              "type": "bytes",
-              "name": ""
+              "type": "str",
+              "name": "lang1"
             },
             "2": {
-              "type": "bytes",
-              "name": ""
+              "type": "str",
+              "name": "lang2"
             }
           }
         }
@@ -233,11 +233,11 @@
     "type": "message",
     "message_typedef": {
       "1": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "registryRoot"
       }
     },
-    "name": ""
+    "name": "registryPaths"
   },
   "8": {
     "type": "int",
@@ -247,12 +247,12 @@
     "type": "message",
     "message_typedef": {
       "1": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "name"
       },
       "2": {
-        "type": "bytes",
-        "name": ""
+        "type": "str",
+        "name": "path"
       },
       "3": {
         "type": "int",
@@ -368,12 +368,12 @@
     "alt_typedefs": {
       "1": {
         "1": {
-          "type": "bytes",
-          "name": ""
+          "type": "str",
+          "name": "lang"
         },
         "2": {
           "type": "int",
-          "name": ""
+          "name": "id"
         }
       }
     }

@@ -9,7 +9,7 @@ def print_sample(plaintextBytes, cipher):
     sample = plaintextBytes[:300]
     print(cipher + ":\n" + sample)
 
-MANIFEST_FILE = 'files/wd1_uplay_install.manifest'
+MANIFEST_FILE = 'files/wdl_uplay_install.manifest'
 PAYLOAD_START = 356
 
 manifestBytes = open(MANIFEST_FILE, mode='rb').read()
@@ -27,6 +27,7 @@ outFile = open(MANIFEST_FILE+'.unzipped', mode='wb')
 outFile.write(decompressed)
 outFile.close()
 
+# Types: https://github.com/ydkhatri/blackboxprotobuf/blob/master/blackboxprotobuf/lib/types/type_maps.py#L29
 typedef = json.loads(open('combined.typedef.json', mode='r').read())
 
 message, typedef = blackboxprotobuf.protobuf_to_json(decompressed, message_type=typedef)
