@@ -1,0 +1,60 @@
+syntax = "proto2";
+
+package mg.protocol.uplay_service;
+
+message StartInstall {
+    required uint32 uplay_id = 1;
+}
+
+message InstallingDependency {
+    required string description = 1;
+    required uint32 index_number = 2;
+    required uint32 installers_count = 3;
+}
+
+message DependencyInstalled {
+    required string installer_id = 1;
+    required uint32 version = 2;
+    required bool restart_required = 3;
+}
+
+message InstallCompleted {
+    required bool restart_required = 1;
+}
+
+message GearResult {
+    required string result = 1;
+}
+
+message Req {
+    optional StartInstall start_install = 1;
+    optional InstallingDependency installing_dependency = 2;
+    optional DependencyInstalled dependency_installed = 3;
+    optional InstallCompleted install_completed = 4;
+    optional GearResult gear_result = 5;
+}
+
+message DependencyRestartRsp {
+    optional bool is_approved = 1;
+}
+
+message Rsp {
+    optional DependencyRestartRsp restart = 1;
+}
+
+message CancelInstallPush {
+    
+}
+
+message Push {
+    optional CancelInstallPush cancel_install = 1;
+}
+
+message Upstream {
+    optional Req req = 1;
+}
+
+message Downstream {
+    optional Rsp rsp = 1;
+    optional Push push = 2;
+}

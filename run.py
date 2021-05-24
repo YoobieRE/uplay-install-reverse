@@ -5,7 +5,7 @@ from protobuf_inspector.types import StandardParser
 from google.protobuf.json_format import MessageToJson
 from google.protobuf.message import DecodeError
 from google.protobuf import text_format
-import protos.manifest_pb2 as Manifest
+import protos.download_pb2 as Download
 import json
 
 def print_sample(plaintextBytes, cipher):
@@ -13,7 +13,7 @@ def print_sample(plaintextBytes, cipher):
     sample = plaintextBytes[:300]
     print(cipher + ":\n" + sample)
 
-MANIFEST_FILE = 'files/wdl_uplay_install.manifest'
+MANIFEST_FILE = 'files/wd1_uplay_install.manifest'
 PAYLOAD_START = 356
 
 manifestBytes = open(MANIFEST_FILE, mode='rb').read()
@@ -31,7 +31,7 @@ outFile = open(MANIFEST_FILE+'.pb', mode='wb')
 outFile.write(decompressed)
 outFile.close()
 
-manifest = Manifest.Manifest()
+manifest = Download.Manifest()
 manifest.ParseFromString(decompressed)
 with open(MANIFEST_FILE + '.json', 'w') as jsfile:
     actual_json_text = MessageToJson(manifest)

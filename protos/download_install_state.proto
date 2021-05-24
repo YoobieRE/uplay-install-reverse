@@ -1,0 +1,72 @@
+syntax = "proto2";
+
+package mg.protocol.download_install_state;
+
+message License {
+    required string identifier = 1;
+    required uint32 version = 2;
+}
+
+message Installer {
+    required string identifier = 1;
+    optional uint32 manifest_version = 2;
+    optional uint32 installed_version = 3;
+}
+
+message RegistryEntry {
+    required string key = 1;
+    optional string language = 2;
+    optional string string_value = 3;
+    optional uint32 number_value = 4;
+}
+
+message Chunk {
+    required uint32 chunk_id = 1;
+    required bool is_required = 2;
+    required bool is_downloaded = 3;
+    optional string language = 4;
+    optional uint32 uplay_id = 5;
+    optional string tags = 6;
+    repeated uint32 uplay_ids = 7;
+}
+
+message Shortcut {
+    required string name = 1;
+}
+
+message TextFileEntry {
+    required string fileName = 1;
+    required string locale = 2;
+}
+
+message TextFileList {
+    optional string rootPath = 1;
+    repeated TextFileEntry files = 2;
+}
+
+message DownloadInstallState {
+    optional string manifest_sha1 = 1;
+    optional string downloading_sha1 = 10;
+    optional uint32 version = 2;
+    optional string selected_language = 3;
+    repeated License licenses = 4;
+    repeated Installer installers = 5;
+    repeated Chunk chunks = 6;
+    optional string shortcut_name = 11;
+    repeated Shortcut shortcuts = 13;
+    repeated RegistryEntry registry_entries = 15;
+    repeated string languages = 17;
+    repeated string downloading_languages = 18;
+    optional bool patch_required = 19;
+    optional uint64 bytes_downloaded_on_patch_start = 20;
+    optional uint64 required_bytes_downloaded_on_patch_start = 21;
+    optional string game_name = 22;
+    optional TextFileList readmeFiles = 23;
+    optional TextFileList manualFiles = 24;
+    optional string game_version = 25;
+    repeated string installed_languages = 26;
+    repeated uint32 installed_addons = 27;
+    optional uint32 uplay_id = 28;
+    optional bool invalidate_game_token_required = 29;
+    optional bool epic_run_installation = 30 [default = false];
+}
