@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package mg.protocol.configuration;
+
+message Configuration {
+    optional uint32 product_id = 1;
+    optional uint32 uplay_id = 2;
+    required string configuration = 3;
+}
+
+message ConfigurationCache {
+    repeated Configuration configurations = 1;
+}

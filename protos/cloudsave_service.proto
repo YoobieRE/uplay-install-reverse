@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package mg.protocol.cloudsave_service;
+
+message OptionalArgs {
+    uint32 write_length = 1;
+    string md5_base64 = 2;
+}
+
+message Item {
+    string item_name = 1;
+    OptionalArgs optional_args = 2;
+}
+
+message CloudsaveUrlReq {
+    string ownership_token = 1;
+    uint32 uplay_id = 2;
+    
+    Method method = 3;
+    enum Method {
+        Method_Unknown = 0;
+        Method_Put = 1;
+        Method_Get = 2;
+        Method_Delete = 3;
+    }
+    
+    repeated Item items = 4;
+}
+
+message CloudsaveUrlRsp {
+    Status status = 1;
+    enum Status {
+        Status_Unknown = 0;
+        Status_Ok = 1;
+        Status_InternalError = 2;
+        Status_Denied = 3;
+    }
+    
+    repeated HttpReq http_reqs = 2;
+    message HttpReq {
+        string header = 1;
+        string url = 2;
+    }
+}
+
+message Req {
+    uint32 request_id = 1;
+    CloudsaveUrlReq cloudsave_url_req = 2;
+}
+
+message Rsp {
+    uint32 request_id = 1;
+    CloudsaveUrlRsp cloudsave_url_rsp = 2;
+}
+
+message Upstream {
+    Req request = 1;
+}
+
+message Downstream {
+    Rsp response = 1;
+}

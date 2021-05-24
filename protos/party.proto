@@ -1,0 +1,243 @@
+syntax = "proto2";
+
+package mg.protocol.party;
+
+message Party {
+    required uint64 party_id = 1;
+    repeated PartyMember party_members = 2;
+}
+
+message ReconnectInfo {
+    required bool reconnect_ok = 1;
+    optional Party party = 2;
+}
+
+message StartSessionReq {
+    optional uint32 cookie = 1;
+}
+
+message StartSessionRsp {
+    required uint32 cookie = 1;
+    optional ReconnectInfo reconnect_info = 2;
+}
+
+message User {
+    required string account_id = 1;
+}
+
+message Guest {
+    required string nick = 1;
+}
+
+message GameSessionRemoved {
+    
+}
+
+message UserDataRemoved {
+    
+}
+
+message GuestRemoved {
+    
+}
+
+message GameSession {
+    required uint32 uplay_id = 1;
+    optional uint64 game_session_id = 2;
+    optional string game_session_id_v2 = 5;
+    required bytes game_session_data = 3;
+    required bool joinable = 4;
+    optional uint32 size = 6;
+    optional uint32 max_size = 7;
+}
+
+message PartyMember {
+    required User user = 1;
+    
+    optional Status status = 2;
+    enum Status {
+        Invited = 1;
+        Member = 2;
+        Offline = 3;
+    }
+    
+    optional GameSession game_session = 3;
+    optional GameSessionRemoved game_session_removed = 4;
+    optional Guest guest = 5;
+    optional GuestRemoved guest_removed = 6;
+    optional bool party_owner = 7;
+    optional bytes user_data = 8;
+    optional UserDataRemoved user_data_removed = 9;
+}
+
+message PartyUpdate {
+    repeated User left = 1;
+    repeated PartyMember added = 2;
+    repeated PartyMember updated = 3;
+}
+
+message PartyInviteReq {
+    repeated User users_to_invite = 1;
+    required string uplay_id = 2;
+    required string product_name = 3;
+    required uint64 chat_channel_id = 4;
+    optional uint32 max_party_size = 5;
+    optional Guest guest = 6;
+    optional bytes user_data = 7;
+    optional GameSession game_session = 8;
+}
+
+message PartyInviteRsp {
+    required bool ok = 1;
+    optional Party party = 2;
+}
+
+message LeaveReq {
+    
+}
+
+message LeaveRsp {
+    required bool ok = 1;
+}
+
+message PartyInviteResponseReq {
+    required uint64 party_id = 1;
+    
+    required Response response = 2;
+    enum Response {
+        Accept = 1;
+        Decline = 2;
+    }
+    
+    optional Guest guest = 3;
+    optional bytes user_data = 4;
+    optional GameSession game_session = 5;
+}
+
+message PartyInviteResponseRsp {
+    required PartyReqResult result = 1;
+    optional Party party = 2;
+}
+
+message PromoteToLeaderReq {
+    required User user = 1;
+}
+
+message PromoteToLeaderRsp {
+    required bool ok = 1;
+}
+
+message SetUserDataReq {
+    optional bytes user_data = 1;
+}
+
+message SetUserDataRsp {
+    required bool ok = 1;
+}
+
+message GameSessionInviteReq {
+    
+}
+
+message GameSessionInviteRsp {
+    required bool ok = 1;
+}
+
+message SetInGameSessionReq {
+    optional GameSession game_session = 1;
+}
+
+message SetInGameSessionRsp {
+    required bool ok = 1;
+}
+
+message SetGuestReq {
+    optional Guest guest = 1;
+}
+
+message SetGuestRsp {
+    required PartyReqResult result = 1;
+}
+
+message ChatMessage {
+    required string simple_text_message = 1;
+}
+
+message ChatMessageReq {
+    required ChatMessage chat_message = 1;
+}
+
+message ChatMessageRsp {
+    required bool ok = 1;
+}
+
+message Req {
+    required uint32 request_id = 1;
+    optional PartyInviteReq party_invite_req = 2;
+    optional PartyInviteResponseReq party_invite_response_req = 3;
+    optional LeaveReq leave_req = 4;
+    optional GameSessionInviteReq game_session_invite_req = 5;
+    optional SetInGameSessionReq set_in_game_session_req = 6;
+    optional SetUserDataReq set_user_data_req = 7;
+    optional PromoteToLeaderReq promote_leader_req = 8;
+    optional SetGuestReq set_guest_req = 9;
+    optional StartSessionReq start_session_req = 10;
+    optional ChatMessageReq chat_message_req = 11;
+}
+
+message Rsp {
+    required uint32 request_id = 1;
+    optional PartyInviteRsp party_invite_rsp = 2;
+    optional PartyInviteResponseRsp party_invite_response_rsp = 3;
+    optional LeaveRsp leave_rsp = 4;
+    optional GameSessionInviteRsp game_session_invite_rsp = 5;
+    optional SetInGameSessionRsp set_in_game_session_rsp = 6;
+    optional SetUserDataRsp set_user_data_rsp = 7;
+    optional PromoteToLeaderRsp promote_leader_rsp = 8;
+    optional SetGuestRsp set_guest_rsp = 9;
+    optional StartSessionRsp start_session_rsp = 10;
+    optional ChatMessageRsp chat_message_rsp = 11;
+}
+
+message PartyChangedPush {
+    required PartyUpdate party_update = 1;
+}
+
+message PartyInvitationPush {
+    required Party party = 1;
+    required string uplay_id = 2;
+    required string product_name = 3;
+    required string from_account_id = 4;
+    required uint64 chat_channel_id = 5;
+}
+
+message GameInvitePush {
+    required GameSession game_session = 1;
+}
+
+message ChatMessagePush {
+    required User sender = 1;
+    required ChatMessage chat_message = 2;
+}
+
+message Push {
+    optional PartyChangedPush party_changed_push = 1;
+    optional PartyInvitationPush party_invitation_push = 2;
+    optional GameInvitePush game_invite_push = 3;
+    optional ChatMessagePush chat_message_push = 4;
+}
+
+message Upstream {
+    optional Req request = 1;
+}
+
+message Downstream {
+    optional Rsp response = 1;
+    optional Push push = 2;
+}
+
+enum PartyReqResult {
+    PartyReqResult_Ok = 1;
+    PartyReqResult_Failed = 2;
+    PartyReqResult_PartyFull = 3;
+}

@@ -1,0 +1,162 @@
+syntax = "proto2";
+
+package mg.protocol.game_starter;
+
+message RichPresenceToken {
+    optional string key = 1;
+    optional string value = 2;
+}
+
+message DiscordRichPresence {
+    optional string app_id = 1;
+    optional string large_image = 2;
+    optional string small_image = 3;
+    optional string text = 5;
+}
+
+message SteamProofOfPurchase {
+    required uint32 steamAppId = 1;
+    required string ticket = 2;
+}
+
+message OculusInfo {
+    optional string appId = 1;
+    optional string userId = 2;
+    optional string oculusUserId = 3;
+    optional string accessToken = 4;
+}
+
+message NvidiaInfo {
+    optional string accessToken = 1;
+}
+
+message WeGameInfo {
+    optional uint64 rail_game_id = 1;
+}
+
+message StartReq {
+    required uint32 launcherVersion = 1;
+    required uint32 uplayId = 2;
+    required bool steamGame = 3;
+    required uint32 gameVersion = 4;
+    optional uint32 productId = 5;
+    optional string simulationConfig = 7;
+    optional string steamTicket = 8;
+    optional string steamId = 9;
+    optional string executablePath = 10;
+    optional string executableArguments = 11;
+    optional uint64 timeStart = 12;
+    optional uint32 steamFreePackageId = 13;
+    optional uint32 steamRequiredProductId = 14;
+    repeated SteamProofOfPurchase steamProofOfPurchase = 15;
+    optional OculusInfo oculusInfo = 16;
+    
+    optional Platform platform = 17;
+    enum Platform {
+        Platform_Uplay = 1;
+        Platform_Steam = 2;
+        Platform_Oculus = 3;
+        Platform_Nvidia = 4;
+        Platform_Switch = 5;
+        Platform_WeGame = 6;
+    }
+    
+    optional string steamOwnerId = 18;
+    optional NvidiaInfo nvidiaInfo = 19;
+    optional WeGameInfo weGameInfo = 20;
+}
+
+message HotkeyStateChangedReq {
+    required int32 hotkeyType = 1;
+    required bool isPressed = 2;
+}
+
+message Hotkey {
+    required int32 hotkeyType = 1;
+    required uint32 keyCode = 2;
+    required bool altState = 3;
+    required bool shiftState = 4;
+    required bool controlState = 5;
+}
+
+message Hotkeys {
+    repeated Hotkey hotkeys = 1;
+}
+
+message StartGrantedRsp {
+    required bool overlayEnabled = 1;
+    required bool windowedMode = 2;
+    optional string executablePath = 3;
+    optional string workingDirectory = 4;
+    optional string arguments = 5;
+    optional string additionalArguments = 6;
+    optional string uplayArguments = 7;
+    
+    optional OverlayInjectionMethod overlayInjectionMethod = 8;
+    enum OverlayInjectionMethod {
+        OverlayInjectionMethod_None = 1;
+        OverlayInjectionMethod_Default = 2;
+        OverlayInjectionMethod_SDK = 3;
+    }
+    
+    optional Hotkeys hotkeys = 9;
+}
+
+message StartDeniedRsp {
+    optional Reason reason = 1;
+    enum Reason {
+        GamePatchRequired = 0;
+    }
+}
+
+message UpdateRequiredRsp {
+    
+}
+
+message ConfirmationRsp {
+    
+}
+
+message Req {
+    optional StartReq startReq = 1;
+    optional HotkeyStateChangedReq hotkeyStateChangedReq = 3;
+}
+
+message ReconnectPush {
+    
+}
+
+message UserInteractionRequiredPush {
+    
+}
+
+message SteamOverlayShowPush {
+    optional string url = 1;
+    optional uint32 steamAppId = 2;
+}
+
+message UpdateHotKeysPush {
+    required Hotkeys hotkeys = 1;
+}
+
+message Push {
+    optional ReconnectPush reconnectPush = 2;
+    optional UserInteractionRequiredPush userInteractionRequiredPush = 3;
+    optional SteamOverlayShowPush steamOverlayShowPush = 4;
+    optional UpdateHotKeysPush updateHotKeysPush = 5;
+}
+
+message Rsp {
+    optional StartGrantedRsp startGrantedRsp = 1;
+    optional StartDeniedRsp startDeniedRsp = 2;
+    optional DiscordRichPresence discordRichPresence = 3;
+}
+
+message Upstream {
+    optional Req req = 1;
+}
+
+message Downstream {
+    optional Push push = 1;
+    optional Rsp rsp = 2;
+}

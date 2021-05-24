@@ -1,0 +1,209 @@
+syntax = "proto3";
+
+package uplay.channelservice.v1;
+
+message ChannelMetadata {
+    string name = 1;
+    string topic = 2;
+}
+
+message Channel {
+    string id = 1;
+    string parent_id = 2;
+    ChannelMetadata metadata = 3;
+    string creator_id = 4;
+    string space_id = 5;
+    ChannelType type = 6;
+    repeated Membership memberships = 7;
+    string last_message_time = 8;
+}
+
+message Membership {
+    string channel_id = 1;
+    string profile_id = 2;
+    MembershipType membership_type = 3;
+    string added_by = 4;
+    string create_time = 5;
+    string update_time = 6;
+}
+
+message Message {
+    string id = 1;
+    string parent_id = 2;
+    string channel_id = 3;
+    string author_id = 4;
+    string text_message = 5;
+    string create_time = 6;
+    string update_time = 7;
+    MessageType type = 8;
+    repeated string mentions = 9;
+}
+
+message MessageKey {
+    string id = 1;
+    string author_id = 2;
+}
+
+message GetChannelRequest {
+    string space_id = 1;
+    string channel_id = 2;
+}
+
+message CreateChannelRequest {
+    string space_id = 1;
+    Channel channel = 2;
+    repeated string members = 3;
+}
+
+message UpdateChannelMetadataRequest {
+    string space_id = 1;
+    string channel_id = 2;
+    ChannelMetadata channel_metadata = 3;
+}
+
+message ListChannelsRequest {
+    string space_id = 1;
+    int32 offset = 2;
+    int32 limit = 3;
+    MembershipType membership_type = 4;
+}
+
+message ListChannelsResponse {
+    repeated Channel channels = 1;
+    string next_token = 2;
+}
+
+message CreateMembershipsRequest {
+    string space_id = 1;
+    string channel_id = 2;
+    repeated string members = 3;
+}
+
+message CreateMembershipsResponse {
+    repeated Membership memberships = 1;
+}
+
+message DeleteMembershipRequest {
+    string space_id = 1;
+    string channel_id = 2;
+}
+
+message UpdateMembershipRequest {
+    string space_id = 1;
+    string channel_id = 2;
+    Membership membership = 3;
+}
+
+message GetMessageRequest {
+    string space_id = 1;
+    string channel_id = 2;
+    string message_id = 3;
+}
+
+message CreateMessageRequest {
+    string space_id = 1;
+    string channel_id = 2;
+    Message message = 3;
+}
+
+message DeleteMessageRequest {
+    string space_id = 1;
+    string channel_id = 2;
+    string message_id = 3;
+}
+
+message UpdateMessageRequest {
+    string space_id = 1;
+    string channel_id = 2;
+    string message_id = 3;
+    Message message = 4;
+}
+
+message ListMessagesRequest {
+    string space_id = 1;
+    string channel_id = 2;
+    int32 limit = 3;
+    string page_token = 4;
+    string parent_id = 5;
+}
+
+message ListMessagesResponse {
+    repeated Message messages = 1;
+    string next_token = 2;
+}
+
+message AckMessageRequest {
+    string space_id = 1;
+    string channel_id = 2;
+    string message_id = 3;
+}
+
+message AckMessageResponse {
+    string channel_id = 1;
+    string message_id = 2;
+}
+
+message GetAckMessageRequest {
+    string space_id = 1;
+    string channel_id = 2;
+}
+
+message GetAckMessageResponse {
+    string channel_id = 1;
+    string message_id = 2;
+}
+
+message PlayerNotificationContent {
+    string channel_id = 1;
+    string profile_id = 2;
+    string message_id = 3;
+    ChannelMetadata metadata = 4;
+    Channel channel = 5;
+    Membership membership = 6;
+    repeated Membership memberships = 7;
+    Message message = 8;
+}
+
+message PlayerNotification {
+    PlayerNotificationContent content = 1;
+    PlayerNotificationType notification_type = 2;
+    string profile_id = 3;
+    string space_id = 4;
+}
+
+message PlayerNotificationBatch {
+    repeated PlayerNotification notifications = 1;
+}
+
+enum ChannelType {
+    CHANNEL_TYPE_UNSPECIFIED = 0;
+    DM = 1;
+    GROUP = 2;
+}
+
+enum MembershipType {
+    MEMBERSHIP_TYPE_UNSPECIFIED = 0;
+    PENDING = 1;
+    ACTIVE = 2;
+}
+
+enum MessageType {
+    MESSAGE_TYPE_UNSPECIFIED = 0;
+    GAME_INVITE = 1;
+    TEXT_MESSAGE = 2;
+    USER_JOINED = 3;
+    USER_LEFT = 4;
+    USER_ADDED = 5;
+}
+
+enum PlayerNotificationType {
+    notification_type_unspecified = 0;
+    upc_channel_metadata_updated = 1;
+    upc_channel_created = 2;
+    upc_channel_memberships_created = 3;
+    upc_channel_membership_updated = 4;
+    upc_channel_membership_deleted = 5;
+    upc_channel_message_created = 6;
+    upc_channel_message_updated = 7;
+    upc_channel_message_deleted = 8;
+}

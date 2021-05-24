@@ -1,0 +1,1468 @@
+syntax = "proto2";
+
+package mg.protocol.uplaydll;
+
+message SDKMonitoringArgument {
+    optional string name = 1;
+    optional string value = 2;
+}
+
+message SDKMonitoringInfoPush {
+    optional string functionName = 1;
+    repeated SDKMonitoringArgument arguments = 2;
+}
+
+message SDKMonitoringConfig {
+    optional bool sdkMonitoringEnabled = 1;
+}
+
+message SDKMonitoringReq {
+    optional SDKMonitoringInfoPush sdkMonitoringInfoPush = 1;
+}
+
+message SDKMonitoringRsp {
+    optional SDKMonitoringConfig sdkMonitoringConfig = 1;
+}
+
+message Consumable {
+    required uint32 productId = 1;
+    required uint32 quantity = 2;
+}
+
+message DevArgs {
+    optional bool uatOnly = 1;
+}
+
+message InitReq {
+    optional uint32 uplayId = 1;
+    optional uint32 processId = 2;
+    optional uint32 apiVersion = 3;
+    optional bool subSystemFriend = 4;
+    optional bool subSystemOverlay = 5;
+    optional bool subSystemProduct = 6;
+    optional bool subSystemStorage = 7;
+    optional bool subSystemInstall = 8;
+    optional bool subSystemMultiplayer = 9;
+    optional bool subSystemStore = 10;
+}
+
+message InitProcessReq {
+    optional uint32 uplayId = 1;
+    optional uint32 processId = 2;
+    optional uint32 apiVersion = 3;
+    optional DevArgs devArgs = 4;
+    optional bool uplayEnvIsSet = 5;
+}
+
+message InitSubSystemOverlayReq {
+    
+}
+
+message GameCdKey {
+    required uint32 uplayId = 1;
+    optional string cdKey = 2;
+}
+
+message GameOptions {
+    required string name = 1;
+    required string filepath = 2;
+}
+
+message GameInstall {
+    optional bool success = 1;
+    optional Chunks chunks = 2;
+    optional string language = 3;
+}
+
+message Account {
+    optional string accountId = 1;
+    optional string username = 2;
+    optional string nameOnPlatform = 3;
+    optional string email = 4;
+    optional string password = 5;
+}
+
+message Overlay {
+    optional bool enabled = 1;
+    optional OverlayInjectionMethod injectionMethod = 2;
+}
+
+message HardwareBenchmark {
+    optional uint32 cpuScore = 1;
+    optional uint32 gpuScore = 2;
+    optional float gpuScoreConfidenceLevel = 3;
+}
+
+message Storage {
+    optional string savegameStoragePath = 1;
+}
+
+message InitRsp {
+    required InitResult result = 1;
+    optional Account account = 2;
+    optional bool connected = 3;
+    optional uint32 gameUplayId = 4;
+    repeated uint32 uplayIds = 5;
+    repeated GameCdKey gameCdKeys = 6;
+    optional bool isInOfflineMode = 7;
+    optional string upcTicket = 8;
+    repeated Consumable consumables = 9;
+    optional uint32 uplayPID = 10;
+    optional SDKMonitoringConfig sdkMonitoringConfig = 11;
+    optional bool devmode = 12;
+    optional GameOptions gameOptions = 13;
+    optional GameInstall gameInstall = 14;
+    optional Overlay overlay = 15;
+    optional HardwareBenchmark hwBenchmark = 16;
+    optional Storage storage = 17;
+    optional FriendInit friendInit = 18;
+    optional StoreInit storeInit = 19;
+    optional MultiplayerInit multiplayerInit = 20;
+    optional UserInit userInit = 21;
+}
+
+message InitProcessRsp {
+    required InitResult result = 1;
+    optional uint32 uplayPID = 2;
+    optional bool overlayEnabled = 3;
+    optional OverlayInjectionMethod overlayInjectionMethod = 4;
+    optional SDKMonitoringConfig sdkMonitoringConfig = 5;
+    optional bool devmode = 6;
+}
+
+message InitSubSystemOverlayRsp {
+    
+}
+
+message RichPresenceTokenPair {
+    optional string key = 1;
+    optional string value = 2;
+}
+
+message SetRichPresenceReq {
+    required uint32 requestId = 1;
+    optional uint32 presenceId = 2;
+    repeated RichPresenceTokenPair presenceTokens = 3;
+}
+
+message SetRichPresenceRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message RichPresenceReq {
+    optional SetRichPresenceReq setReq = 1;
+}
+
+message AchievementInBlob {
+    required uint32 achievementId = 1;
+    optional uint32 titleId = 2;
+    optional uint32 descriptionId = 3;
+    optional uint32 imageId = 4;
+}
+
+message AchievementsBlob {
+    repeated AchievementInBlob achievements = 1;
+}
+
+message TakenAchievement {
+    required AchievementInBlob achievement = 1;
+    required uint64 timestamp = 2;
+}
+
+message Spool {
+    repeated TakenAchievement achievementsTaken = 1;
+}
+
+message WriteAchievementsReq {
+    required AchievementInBlob achievement = 1;
+}
+
+message WriteAchievementsRsp {
+    required bool status = 1;
+}
+
+message AchievementData {
+    required uint32 id = 1;
+    required string name = 2;
+    required string description = 3;
+    required bool isEarned = 4;
+    required uint64 timestamp = 5;
+}
+
+message GetAchievementsReq {
+    required uint32 requestId = 1;
+    optional bool onlyEarned = 2;
+    optional string accountId = 3;
+    optional string languageCountryCode = 4;
+}
+
+message GetAchievementsRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    repeated AchievementData data = 3;
+}
+
+message GetAchievementImageReq {
+    required uint32 requestId = 1;
+    required uint32 id = 2;
+}
+
+message GetAchievementImageRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    optional bytes data = 3;
+}
+
+message EarnAchievementReq {
+    required uint32 requestId = 1;
+    required uint32 id = 2;
+}
+
+message EarnAchievementRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message AchievementReq {
+    optional GetAchievementsReq getReq = 1;
+    optional GetAchievementImageReq imageReq = 2;
+    optional EarnAchievementReq earnReq = 3;
+}
+
+message AchievementRsp {
+    optional GetAchievementsRsp getRsp = 1;
+    optional GetAchievementImageRsp imageRsp = 2;
+    optional EarnAchievementRsp earnRsp = 3;
+}
+
+message GameSession {
+    required uint64 id = 1;
+    required bytes data = 2;
+    optional GameSessionJoinability joinability = 3;
+}
+
+message UserData {
+    required bytes data = 1;
+}
+
+message Guest {
+    required string name = 1;
+}
+
+message PartyMember {
+    required string accountId = 1;
+    required string name = 2;
+    optional uint64 gameSessionId = 3;
+    optional bytes gameSessionData = 4;
+    optional Guest guest = 5;
+    optional bytes userData = 6;
+}
+
+message InitPartyReq {
+    required bool enableGameInviteReceivedEvent = 1;
+    required bool enableGuests = 2;
+}
+
+message InitPartyRsp {
+    required string accountId = 1;
+}
+
+message InviteToPartyReq {
+    required uint32 requestId = 1;
+    required string accountId = 2;
+}
+
+message InviteToPartyRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message InvitePartyToGameReq {
+    required uint32 requestId = 1;
+}
+
+message InvitePartyToGameRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message ShowGameInviteOverlayUIReq {
+    required uint32 inviteId = 1;
+    required GameSession gameSession = 2;
+}
+
+message PartyListUpdatedPush {
+    repeated PartyMember members = 1;
+    required string leader = 2;
+    optional uint64 partyId = 3;
+}
+
+message SetUserDataReq {
+    required bytes data = 1;
+}
+
+message PromoteToLeaderReq {
+    required uint32 requestId = 1;
+    required string accountId = 2;
+}
+
+message PromoteToLeaderRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message SetInPartyGameSessionReq {
+    
+}
+
+message GameInvitePush {
+    required uint32 inviteId = 1;
+    required GameSession gameSession = 2;
+    required string fromAccountId = 3;
+}
+
+message GameInviteAcceptedPush {
+    required uint32 inviteId = 1;
+}
+
+message GameInviteDeclinedPush {
+    required uint32 inviteId = 1;
+}
+
+message PartyInvitePush {
+    required string accountId = 1;
+}
+
+message PartyReq {
+    optional InitPartyReq initPartyReq = 1;
+    optional InviteToPartyReq inviteToPartyReq = 2;
+    optional InvitePartyToGameReq invitePartyToGameReq = 3;
+    optional SetUserDataReq setUserDataReq = 4;
+    optional PromoteToLeaderReq promoteToLeaderReq = 5;
+    optional ShowGameInviteOverlayUIReq gameInviteOverlayUIReq = 8;
+}
+
+message PartyRsp {
+    optional InitPartyRsp initPartyRsp = 1;
+    optional PartyListUpdatedPush listUpdatePush = 2;
+    optional GameInviteAcceptedPush gameInviteAcceptedPush = 3;
+    optional GameInviteDeclinedPush gameInviteDeclinedPush = 4;
+    optional InvitePartyToGameRsp invitePartyToGameRsp = 5;
+    optional InviteToPartyRsp inviteToPartyRsp = 6;
+    optional GameInvitePush gameInvitePush = 7;
+    optional PromoteToLeaderRsp promoteToLeaderRsp = 9;
+    optional PartyInvitePush partyInvitePush = 10;
+}
+
+message SetGameSessionReq {
+    required GameSession gameSession = 1;
+}
+
+message ClearGameSessionReq {
+    
+}
+
+message GetCredentialsReq {
+    required uint32 requestId = 1;
+}
+
+message GetCredentialsRsp {
+    required uint32 requestId = 1;
+    required string username = 2;
+    required string password = 3;
+    required string accountId = 4;
+    required string email = 5;
+}
+
+message AccountSharingPush {
+    
+}
+
+message ConnectionLostPush {
+    
+}
+
+message ConnectionRestoredPush {
+    
+}
+
+message OwnershipAddedPush {
+    required uint32 uplayId = 1;
+    optional string cdKey = 2;
+    required Product product = 3;
+}
+
+message OwnershipRemovedPush {
+    repeated uint32 uplayIds = 1;
+}
+
+message TrialAboutToExpirePush {
+    optional uint32 minutesBeforeEnd = 1;
+}
+
+message TrialExpiredPush {
+    
+}
+
+message TicketPush {
+    required string ticket = 1;
+}
+
+message ConsumeItemReq {
+    required uint32 requestId = 1;
+    required uint32 product_id = 2;
+    required uint32 quantity = 3;
+    required string transaction_id = 4;
+    required string signature = 5;
+}
+
+message ConsumeItemRsp {
+    required uint32 requestId = 1;
+    
+    required Result result = 2;
+    enum Result {
+        Result_Success = 0;
+        Result_NotEnoughItems = 1;
+        Result_Failure = 2;
+    }
+    
+    optional string signature = 3;
+}
+
+message ConsumableUpdatedPush {
+    required Consumable consumable = 1;
+}
+
+message GetProfileReq {
+    required uint32 requestId = 1;
+    required string accountId = 2;
+}
+
+message GetProfileRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    optional string name = 3;
+}
+
+message UserReq {
+    optional GetCredentialsReq getCredentialsReq = 1;
+    optional ConsumeItemReq consumeItemReq = 2;
+    optional GetProfileReq getProfileReq = 3;
+}
+
+message UserRsp {
+    optional GetCredentialsRsp getCredentialsRsp = 1;
+    optional AccountSharingPush accountSharingPush = 2;
+    optional OwnershipAddedPush ownershipAddedPush = 5;
+    optional TicketPush ticketPush = 6;
+    optional ConsumeItemRsp consumeItemRsp = 7;
+    optional ConsumableUpdatedPush consumableUpdatedPush = 8;
+    optional OwnershipRemovedPush ownershipRemovedPush = 9;
+    optional GetProfileRsp getProfileRsp = 10;
+    optional TrialAboutToExpirePush trialAboutToExpirePush = 11;
+    optional TrialExpiredPush trialExpiredPush = 12;
+}
+
+message Friend {
+    required string accountId = 1;
+    required string name = 2;
+    required string nickname = 3;
+    required Relationship relationship = 4;
+    required bool blackListed = 5;
+    required OnlineStatus presence = 6;
+    required bool playingCurrentGame = 7;
+    optional GameSession gameSession = 8;
+}
+
+message InitFriendsReq {
+    
+}
+
+message FriendInit {
+    repeated string friendList = 1;
+    optional bool isAvailable = 2;
+}
+
+message FriendListUpdatedPush {
+    repeated Friend friendList = 1;
+}
+
+message FriendListUpdatedPushV2 {
+    repeated User friendsAdded = 1;
+    repeated User friendsNameUpdated = 2;
+    repeated User friendsPresenceUpdated = 3;
+    repeated User friendsRemoved = 4;
+}
+
+message GameSessionUpdate {
+    optional GameSession gameSession = 1;
+}
+
+message RequestFriendshipReq {
+    required uint32 requestId = 1;
+    required string searchString = 2;
+}
+
+message RequestFriendshipRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message AddToBlackListReq {
+    required uint32 requestId = 1;
+    required string accountId = 2;
+}
+
+message AddToBlackListRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message RemoveFromBlackListReq {
+    required uint32 requestId = 1;
+    required string accountId = 2;
+}
+
+message RemoveFromBlackListRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message SendGameInviteReq {
+    required uint32 requestId = 1;
+}
+
+message SendGameInviteRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message FriendSelectionFilter {
+    repeated string allowedAccountIds = 1;
+}
+
+message ShowFriendSelectionUIReq {
+    required uint32 requestId = 1;
+    optional FriendSelectionFilter filter = 2;
+}
+
+message ShowFriendSelectionUISuccess {
+    required string accountId = 1;
+}
+
+message ShowFriendSelectionUICanceled {
+    
+}
+
+message ShowFriendSelectionUIEmptyList {
+    
+}
+
+message ShowFriendSelectionUIRsp {
+    required uint32 requestId = 1;
+    optional ShowFriendSelectionUISuccess success = 2;
+    optional ShowFriendSelectionUICanceled cancelled = 3;
+    optional ShowFriendSelectionUIEmptyList emptyList = 4;
+}
+
+message FriendCustomMenuItemSelectedPush {
+    required uint32 itemId = 1;
+    required string accountId = 2;
+}
+
+message FriendsGameInviteAcceptReq {
+    optional uint32 inviteId = 1;
+    optional bool isAccepted = 2;
+}
+
+message FriendsGameInviteAcceptedPush {
+    required GameSession gameSession = 1;
+    required string accountId = 2;
+}
+
+message FriendsGameInvitePush {
+    optional uint32 inviteId = 1;
+    optional string fromAccountId = 2;
+}
+
+message InviteFriendToGameReq {
+    required uint32 requestId = 1;
+    required string accountId = 2;
+}
+
+message InviteFriendToGameRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message ShowInviteFriendsToGameUIReq {
+    repeated string allowedAccountIds = 1;
+}
+
+message AddPlayedWithReq {
+    required uint32 requestId = 1;
+    optional string description = 2;
+    repeated string accountIds = 3;
+}
+
+message AddPlayedWithRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message RemoveFriendshipReq {
+    required uint32 requestId = 1;
+    required string accountId = 2;
+}
+
+message RemoveFriendshipRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message GetNameReq {
+    required uint32 requestId = 1;
+    required string accountId = 2;
+}
+
+message GetNameRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    required string name = 3;
+}
+
+message Presence {
+    optional OnlineStatusV2 onlineStatus = 1;
+    optional string details = 2;
+    optional uint32 titleId = 3;
+    optional string titleName = 4;
+    optional string multiplayerId = 5;
+    optional bool multiplayerJoinable = 6;
+    optional uint32 multiplayerSize = 7;
+    optional uint32 multiplayerMaxSize = 8;
+    optional string multiplayerInternalData = 9;
+}
+
+message User {
+    required string id = 1;
+    optional string name = 2;
+    optional Relationship relationship = 3;
+    optional Presence presence = 4;
+}
+
+message GetFriendListReq {
+    required uint32 requestId = 1;
+    optional string accountId = 2;
+    optional uint32 onlineStatusFilter = 3;
+    optional uint32 languageCountryCode = 4;
+}
+
+message GetFriendListRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    repeated User friendList = 3;
+}
+
+message FriendsReq {
+    optional InitFriendsReq initReq = 1;
+    optional RequestFriendshipReq requestFriendshipReq = 2;
+    optional AddToBlackListReq addToBlackListReq = 3;
+    optional ShowFriendSelectionUIReq showFriendSelectionUIReq = 5;
+    optional InviteFriendToGameReq inviteFriendToGameReq = 8;
+    optional ShowInviteFriendsToGameUIReq showInviteFriendsToGameUIReq = 9;
+    optional AddPlayedWithReq addPlayedWithReq = 10;
+    optional RemoveFriendshipReq removeFriendshipReq = 11;
+    optional RemoveFromBlackListReq removeFromBlackListReq = 12;
+    optional GetNameReq getNameReq = 13;
+    optional FriendsGameInviteAcceptReq gameInviteAcceptReq = 14;
+    optional GetFriendListReq getFriendListReq = 15;
+}
+
+message FriendsRsp {
+    optional FriendListUpdatedPush friendListUpdatedPush = 1;
+    optional FriendsGameInviteAcceptedPush friendsGameInviteAcceptedPush = 3;
+    optional RequestFriendshipRsp requestFriendhipRsp = 4;
+    optional AddToBlackListRsp addToBlackListRsp = 5;
+    optional SendGameInviteRsp sendGameInviteRsp = 6;
+    optional ShowFriendSelectionUIRsp showFriendSelectionUIRsp = 7;
+    optional InviteFriendToGameRsp inviteFriendToGameRsp = 8;
+    optional RemoveFriendshipRsp removeFriendshipRsp = 9;
+    optional RemoveFromBlackListRsp removeFromBlackListRsp = 10;
+    optional GetNameRsp getNameRsp = 11;
+    optional GetFriendListRsp getFriendListRsp = 12;
+    optional FriendsGameInvitePush gameInvitePush = 13;
+    optional FriendListUpdatedPushV2 friendListUpdatedPushV2 = 14;
+}
+
+message GetAvatarReq {
+    required uint32 requestId = 1;
+    optional string accountId = 2;
+    required AvatarSize size = 3;
+}
+
+message GetAvatarRsp {
+    required uint32 requestId = 1;
+    optional bytes bitmap = 2;
+    required OperationResult result = 3;
+}
+
+message AvatarReq {
+    optional GetAvatarReq getAvatarReq = 1;
+}
+
+message AvatarRsp {
+    optional GetAvatarRsp getAvatarRsp = 1;
+}
+
+message Product {
+    required uint32 id = 1;
+    required ProductType type = 2;
+    required ProductOwnership ownership = 3;
+    required ProductState state = 4;
+    optional uint32 balance = 5;
+    required ProductActivation activation = 6;
+}
+
+message GetProductListReq {
+    required uint32 requestId = 1;
+    optional uint32 filter = 2;
+    optional string accountId = 3;
+}
+
+message GetProductListRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    repeated Product productList = 3;
+}
+
+message ProductConsumeReq {
+    required uint32 requestId = 1;
+    required uint32 productId = 2;
+    required uint32 quantity = 3;
+    required string transactionId = 4;
+    required string signature = 5;
+}
+
+message ProductConsumeRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    required string signature = 3;
+}
+
+message ProductAddedPush {
+    required Product product = 1;
+}
+
+message ProductUpdatedPush {
+    required uint32 id = 1;
+    optional ProductOwnership ownership = 2;
+    optional ProductState state = 3;
+    optional uint32 balance = 4;
+}
+
+message ProductReq {
+    optional GetProductListReq getProductListReq = 1;
+    optional ProductConsumeReq productConsumeReq = 2;
+}
+
+message ProductRsp {
+    optional GetProductListRsp getProductListRsp = 1;
+    optional ProductConsumeRsp productConsumeRsp = 2;
+    optional ProductAddedPush productAddedPush = 3;
+    optional ProductUpdatedPush productUpdatedPush = 4;
+}
+
+message StoreProduct {
+    required uint32 id = 1;
+    required string title = 2;
+    required string description = 3;
+    required string imageUrl = 4;
+    required bool isOwned = 5;
+    required float price = 6;
+    required float priceOriginal = 7;
+    required string currency = 8;
+    required string userBlob = 9;
+    repeated uint32 tags = 10;
+}
+
+message StoreInit {
+    required bool isAvailable = 1;
+    required TargetPartner targetPartner = 2;
+}
+
+message GetStoreProductsReq {
+    required uint32 requestId = 1;
+}
+
+message GetStoreProductsRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    repeated StoreProduct productsList = 3;
+}
+
+message CheckoutReq {
+    required uint32 id = 1;
+}
+
+message ShowProductDetailsReq {
+    required uint32 id = 1;
+}
+
+message ShowProductsReq {
+    repeated uint32 tags = 1;
+}
+
+message ProductsListChangedPush {
+    
+}
+
+message StoreCheckoutStartedPush {
+    required uint32 id = 1;
+}
+
+message StoreCheckoutFinishedPush {
+    required uint32 id = 1;
+    required CheckoutResult result = 2;
+}
+
+message StoreStatusUpdatedPush {
+    required bool isAvailable = 1;
+}
+
+message StoreReq {
+    optional GetStoreProductsReq getStoreProductsReq = 1;
+    optional CheckoutReq checkoutReq = 2;
+    optional ShowProductDetailsReq showProductDetailsReq = 3;
+    optional ShowProductsReq showProductsReq = 4;
+    optional SetLanguageCountryCodeReq setLanguageReq = 5;
+}
+
+message StoreRsp {
+    optional GetStoreProductsRsp getStoreProductsRsp = 1;
+    optional ProductsListChangedPush productsListChangedPush = 2;
+    optional StoreCheckoutStartedPush storeCheckoutStartedPush = 3;
+    optional StoreCheckoutFinishedPush storeCheckoutFinishedPush = 4;
+    optional StoreStatusUpdatedPush storeStatusUpdatedPush = 5;
+}
+
+message MultiplayerSession {
+    required string id = 1;
+    required MultiplayerSessionJoinability joinability = 2;
+    required uint32 size = 3;
+    required uint32 maxSize = 4;
+    optional bytes internalData = 5;
+}
+
+message MultiplayerInit {
+    optional MultiplayerSession session = 1;
+    optional bool isAvailable = 2;
+}
+
+message MultiplayerSessionSetReq {
+    required uint32 requestId = 1;
+    optional MultiplayerSession session = 2;
+}
+
+message MultiplayerSessionSetRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message MultiplayerInviteReq {
+    required uint32 requestId = 1;
+    required string userId = 2;
+}
+
+message MultiplayerInviteRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message MultiplayerInviteCancelReq {
+    required string userId = 1;
+}
+
+message MultiplayerInviteAnswerReq {
+    required uint32 requestId = 1;
+    required string senderId = 2;
+    required bool isAccepted = 3;
+}
+
+message MultiplayerInviteAnswerRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message MultiplayerInviteReceivedPush {
+    required string senderId = 1;
+    required MultiplayerSession session = 2;
+}
+
+message MultiplayerInviteAcceptedPush {
+    required string senderId = 1;
+    required MultiplayerSession session = 2;
+}
+
+message MultiplayerInviteDeclinedPush {
+    required string senderId = 1;
+}
+
+message MultiplayerSessionUpdatedPush {
+    optional MultiplayerSession session = 1;
+}
+
+message MultiplayerJoiningRequestedPush {
+    required MultiplayerSession session = 1;
+}
+
+message MultiplayerReq {
+    optional MultiplayerSessionSetReq multiplayerSessionSetReq = 1;
+    optional MultiplayerInviteReq multiplayerInviteReq = 2;
+    optional MultiplayerInviteCancelReq multiplayerInviteCancelReq = 3;
+    optional MultiplayerInviteAnswerReq multiplayerInviteAnswerReq = 4;
+}
+
+message MultiplayerRsp {
+    optional MultiplayerSessionSetRsp multiplayerSessionSetRsp = 1;
+    optional MultiplayerInviteRsp multiplayerInviteRsp = 2;
+    optional MultiplayerInviteAnswerRsp multiplayerInviteAnswerRsp = 3;
+    optional MultiplayerInviteReceivedPush multiplayerInviteReceivedPush = 4;
+    optional MultiplayerInviteAcceptedPush multiplayerInviteAcceptedPush = 5;
+    optional MultiplayerInviteDeclinedPush multiplayerInviteDeclinedPush = 6;
+    optional MultiplayerSessionUpdatedPush multiplayerSessionUpdatedPush = 7;
+    optional MultiplayerJoiningRequestedPush multiplayerJoiningRequestedPush = 8;
+}
+
+message OverlayShowReq {
+    required uint32 requestId = 1;
+    required OverlaySection section = 2;
+}
+
+message OverlayShowRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message OverlayStateChangedPush {
+    required OverlayState state = 1;
+}
+
+message OverlaySetShopUrlReq {
+    required uint32 requestId = 1;
+    required string url = 2;
+}
+
+message OverlaySetShopUrlRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message OverlayShowShopUrlReq {
+    required string url = 1;
+}
+
+message OverlayShowBrowserUrlReq {
+    required uint32 requestId = 1;
+    required string url = 2;
+}
+
+message OverlayShowBrowserUrlRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message OverlayShowNotificationReq {
+    required uint32 requestId = 1;
+    required uint32 notificationId = 2;
+}
+
+message OverlayShowNotificationRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message OverlayShowFriendInvitationReq {
+    required uint32 requestId = 1;
+    repeated string userIds = 2;
+}
+
+message OverlayShowFriendInvitationRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message OverlayShowFriendSelectionReq {
+    required uint32 requestId = 1;
+    repeated string userIds = 2;
+}
+
+message OverlayShowFriendSelectionRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    repeated string selectedIds = 3;
+}
+
+message OverlayMicroAppParam {
+    required string name = 1;
+    required string value = 2;
+}
+
+message OverlayShowMicroAppReq {
+    required uint32 requestId = 1;
+    required string microAppName = 2;
+    repeated OverlayMicroAppParam microAppParams = 3;
+}
+
+message OverlayShowMicroAppRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message SetLanguageCountryCodeReq {
+    required string languageCountryCode = 1;
+}
+
+message OverlayReq {
+    optional OverlayShowReq overlayShowReq = 1;
+    optional OverlaySetShopUrlReq overlaySetShopUrlReq = 2;
+    optional OverlayShowShopUrlReq overlayShowShopUrlReq = 3;
+    optional OverlayShowBrowserUrlReq overlayShowBrowserUrlReq = 4;
+    optional OverlayShowNotificationReq overlayShowNotificationReq = 5;
+    optional OverlayShowFriendInvitationReq overlayShowFriendInvitationReq = 6;
+    optional OverlayShowFriendSelectionReq overlayShowFriendSelectionReq = 7;
+    optional OverlayShowMicroAppReq overlayShowMicroAppReq = 8;
+}
+
+message OverlayRsp {
+    optional OverlayShowRsp overlayShowRsp = 1;
+    optional OverlaySetShopUrlRsp overlaySetShopUrlRsp = 2;
+    optional OverlayShowBrowserUrlRsp overlayShowBrowserUrlRsp = 3;
+    optional OverlayShowNotificationRsp overlayShowNotificationRsp = 4;
+    optional OverlayShowFriendInvitationRsp overlayShowFriendInvitationRsp = 5;
+    optional OverlayShowFriendSelectionRsp overlayShowFriendSelectionRsp = 6;
+    optional OverlayStateChangedPush overlayStateChangedPush = 7;
+    optional OverlayShowMicroAppRsp overlayShowMicroAppRsp = 8;
+}
+
+message UserInit {
+    repeated string blacklistedList = 1;
+    optional bool isAvailable = 2;
+}
+
+message UserBlacklistUpdatedPush {
+    repeated string added = 1;
+    repeated string removed = 2;
+}
+
+message UserShutdownPush {
+    optional UserShutdownReason reason = 1;
+}
+
+message UserAddToBlacklistReq {
+    required uint32 requestId = 1;
+    required string userId = 2;
+}
+
+message UserAddToBlacklistRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message UserGetReq {
+    required uint32 requestId = 1;
+    optional string userId = 2;
+}
+
+message UserGetRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    optional User user = 3;
+}
+
+message UserReqV2 {
+    optional UserGetReq userGetReq = 1;
+    optional UserAddToBlacklistReq userAddToBlacklistReq = 2;
+    optional SetRichPresenceReq setRichPresenceReq = 3;
+    optional AddPlayedWithReq addPlayedWithReq = 4;
+}
+
+message UserRspV2 {
+    optional UserGetRsp userGetRsp = 1;
+    optional UserAddToBlacklistRsp userAddToBlacklistRsp = 2;
+    optional SetRichPresenceRsp setRichPresenceRsp = 3;
+    optional AddPlayedWithRsp addPlayedWithRsp = 4;
+    optional UserBlacklistUpdatedPush userBlacklistUpdatedPush = 5;
+    optional UserShutdownPush userShutdownPush = 6;
+}
+
+message Reward {
+    required string name = 1;
+    required string description = 2;
+    required string code = 3;
+    required string url = 4;
+    required uint32 cost = 5;
+    required string gameCode = 6;
+    required string platformCode = 7;
+    required string imageUrl = 8;
+    required bool redeemed = 9;
+}
+
+message GetRewardsReq {
+    required uint32 requestId = 1;
+    optional string languageCountryCode = 2;
+}
+
+message GetRewardsRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    repeated Reward rewards = 3;
+}
+
+message RewardRedeemedPush {
+    required Reward reward = 1;
+}
+
+message Action {
+    required string id = 1;
+    required string name = 2;
+    required string description = 3;
+    required uint32 units = 4;
+    required string imageUrl = 5;
+    required bool completed = 6;
+    repeated string conditionalRewardNames = 7;
+    required string code = 8;
+}
+
+message GetActionsReq {
+    required uint32 requestId = 1;
+    optional string languageCountryCode = 2;
+}
+
+message GetActionsRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    repeated Action actions = 3;
+}
+
+message RefreshActionsReq {
+    
+}
+
+message SetActionsCompletedReq {
+    required uint32 requestId = 1;
+    repeated string actionIds = 2;
+}
+
+message SetActionsCompletedRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message GetUnitBalanceReq {
+    required uint32 requestId = 1;
+}
+
+message GetUnitBalanceRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+    optional uint32 balance = 3;
+}
+
+message UnitBalancePush {
+    required uint32 balance = 1;
+}
+
+message ClubReq {
+    optional GetRewardsReq getRewardsReq = 1;
+    optional RefreshActionsReq refreshActionsReq = 2;
+    optional SetActionsCompletedReq setActionsCompletedReq = 3;
+    optional GetActionsReq getActionsReq = 4;
+    optional GetUnitBalanceReq getUnitBalanceReq = 5;
+}
+
+message ClubRsp {
+    optional GetRewardsRsp getRewardsRsp = 1;
+    optional RewardRedeemedPush rewardRedeemedPush = 2;
+    optional SetActionsCompletedRsp setActionsCompletedRsp = 3;
+    optional GetActionsRsp getActionsRsp = 4;
+    optional GetUnitBalanceRsp getUnitBalanceRsp = 5;
+    optional UnitBalancePush unitBalancePush = 6;
+}
+
+message ChunkInfo {
+    required uint32 chunkId = 1;
+    optional bool downloaded = 2;
+    optional string tags = 3;
+}
+
+message Chunks {
+    repeated ChunkInfo chunks = 1;
+}
+
+message UpdateInstallOrderReq {
+    required uint32 requestId = 1;
+    required Chunks chunks = 2;
+}
+
+message UpdateInstallOrderRsp {
+    required uint32 requestId = 1;
+    required OperationResult result = 2;
+}
+
+message ChunkInstalledPush {
+    required uint32 chunkId = 1;
+}
+
+message ChunkProgressPush {
+    required uint32 chunkId = 1;
+    required uint64 installedBytes = 2;
+    required uint64 sizeInBytes = 3;
+}
+
+message ProgressPush {
+    required uint64 installedBytes = 1;
+    required uint64 sizeInBytes = 2;
+    required uint64 bytesPerSecond = 3;
+}
+
+message InitInstallerReq {
+    optional string simulateConfigFile = 1;
+}
+
+message InitInstallerRsp {
+    required bool success = 1;
+    optional Chunks chunks = 2;
+    optional string language = 3;
+}
+
+message InstallerReq {
+    optional InitInstallerReq initInstallerReq = 1;
+    optional UpdateInstallOrderReq updateInstallOrderReq = 2;
+}
+
+message UpdateAvailablePush {
+    
+}
+
+message InstallerRsp {
+    optional InitInstallerRsp initInstallerRsp = 1;
+    optional UpdateInstallOrderRsp updateInstallOrderRsp = 2;
+    optional ChunkInstalledPush chunkInstalledPush = 3;
+    optional ChunkProgressPush chunkProgressPush = 4;
+    optional ProgressPush progressPush = 5;
+    optional UpdateAvailablePush updateAvailablePush = 6;
+}
+
+message SingleEventTag {
+    required string name = 1;
+    required string value = 2;
+}
+
+message ContinuousTag {
+    required string name = 1;
+    required string value = 2;
+}
+
+message ClearContinuousTag {
+    required string name = 1;
+}
+
+message MetadataReq {
+    optional SingleEventTag singleEventTag = 1;
+    optional ContinuousTag continuousTag = 2;
+    optional ClearContinuousTag clearContinuousTag = 3;
+}
+
+message SetGameOptionsInGameStateReq {
+    optional bool canApplyOptions = 1;
+}
+
+message GameOptionsReq {
+    optional SetGameOptionsInGameStateReq setInGameStateReq = 1;
+}
+
+message TerminateGamePush {
+    
+}
+
+message Req {
+    optional InitReq initReq = 1;
+    optional InitProcessReq initProcessReq = 2;
+    optional WriteAchievementsReq writeAchievementsReq = 3;
+    optional PartyReq partyReq = 4;
+    optional SetGameSessionReq setGameSessionReq = 5;
+    optional ClearGameSessionReq clearGameSessionReq = 6;
+    optional FriendsReq friendsReq = 7;
+    optional AchievementReq achievementReq = 8;
+    optional OverlayReq overlayReq = 9;
+    optional AvatarReq avatarReq = 10;
+    optional UserReq userReq = 11;
+    optional ClubReq clubReq = 12;
+    optional InstallerReq installerReq = 13;
+    optional MetadataReq metadataReq = 14;
+    optional SDKMonitoringReq sdkMonitoringReq = 17;
+    optional RichPresenceReq richPresenceReq = 18;
+    optional StoreReq storeReq = 20;
+    optional GameOptionsReq gameOptionsReq = 21;
+    optional SetLanguageCountryCodeReq setLanguageCountryCodeReq = 22;
+    optional ProductReq productReq = 23;
+    optional MultiplayerReq multiplayerReq = 24;
+    optional UserReqV2 userReqV2 = 25;
+}
+
+message Rsp {
+    optional InitRsp initRsp = 1;
+    optional InitProcessRsp initProcessRsp = 13;
+    optional WriteAchievementsRsp writeAchievementsRsp = 2;
+    optional PartyRsp partyRsp = 3;
+    optional FriendsRsp friendsRsp = 4;
+    optional AchievementRsp achievementRsp = 5;
+    optional OverlayRsp overlayRsp = 6;
+    optional AvatarRsp avatarRsp = 7;
+    optional UserRsp userRsp = 8;
+    optional ClubRsp clubRsp = 9;
+    optional InstallerRsp installerRsp = 10;
+    optional SDKMonitoringRsp sdkMonitoringRsp = 12;
+    optional StoreRsp storeRsp = 14;
+    optional ProductRsp productRsp = 15;
+    optional MultiplayerRsp multiplayerRsp = 16;
+    optional UserRspV2 userRspV2 = 17;
+    optional TerminateGamePush terminateGamePush = 18;
+}
+
+enum OperationResult {
+    ok = 1;
+    invalidArgument = 2;
+    connectionError = 3;
+    notFound = 4;
+    notAPartyLeader = 5;
+    partyFull = 6;
+    fileError = 7;
+    unavailable = 8;
+    declined = 9;
+}
+
+enum ResponseCode {
+    success = 1;
+    failure = 2;
+}
+
+enum InitResult {
+    InitResult_Success = 1;
+    InitResult_Failure = 2;
+    InitResult_ReconnectRequired = 3;
+    InitResult_RestartWithGameLauncherRequired = 4;
+}
+
+enum OverlayInjectionMethod {
+    OverlayInjectionMethod_None = 1;
+    OverlayInjectionMethod_Default = 2;
+    OverlayInjectionMethod_SDK = 3;
+}
+
+enum GameSessionJoinability {
+    JoinableByFriends = 0;
+    InviteOnly = 1;
+    Closed = 2;
+}
+
+enum Relationship {
+    Relationship_RequestSent = 1;
+    Relationship_RequestReceived = 2;
+    Relationship_Friend = 3;
+    Relationship_None = 4;
+}
+
+enum OnlineStatus {
+    Presence_Online = 1;
+    Presence_Offline = 2;
+    Presence_InGame = 3;
+}
+
+enum OnlineStatusV2 {
+    OnlineStatus_Offline = 1;
+    OnlineStatus_DoNotDisturb = 2;
+    OnlineStatus_Away = 4;
+    OnlineStatus_Online = 8;
+}
+
+enum AvatarSize {
+    AvatarSize_64 = 1;
+    AvatarSize_128 = 2;
+    AvatarSize_256 = 3;
+}
+
+enum ProductType {
+    ProductType_Game = 1;
+    ProductType_Addon = 2;
+    ProductType_Package = 3;
+    ProductType_Consumable = 4;
+    ProductType_ConsumablePack = 5;
+    ProductType_Bundle = 6;
+}
+
+enum ProductState {
+    ProductState_Visible = 1;
+    ProductState_Installable = 2;
+    ProductState_Playable = 3;
+    ProductState_Expired = 4;
+}
+
+enum ProductActivation {
+    ProductActivation_Purchased = 1;
+    ProductActivation_Trial = 2;
+    ProductActivation_Subscription = 3;
+}
+
+enum ProductOwnership {
+    ProductOwnership_Owned = 1;
+    ProductOwnership_Preordered = 2;
+    ProductOwnership_Suspended = 3;
+    ProductOwnership_Revoked = 4;
+    ProductOwnership_Locked = 5;
+}
+
+enum CheckoutResult {
+    CheckoutResult_Ok = 1;
+    CheckoutResult_Failed = 2;
+    CheckoutResult_Unknown = 3;
+}
+
+enum TargetPartner {
+    TargetPartner_None = 0;
+    TargetPartner_EpicGames = 1;
+}
+
+enum MultiplayerSessionJoinability {
+    MultiplayerSessionJoinability_Closed = 1;
+    MultiplayerSessionJoinability_InviteOnly = 2;
+    MultiplayerSessionJoinability_FriendsOnly = 3;
+    MultiplayerSessionJoinability_Open = 4;
+}
+
+enum OverlaySection {
+    OverlaySection_Show = 0;
+    OverlaySection_Home = 1;
+    OverlaySection_Achievements = 2;
+    OverlaySection_Actions = 3;
+    OverlaySection_Chat = 4;
+    OverlaySection_Friends = 5;
+    OverlaySection_Party = 6;
+    OverlaySection_Rewards = 7;
+    OverlaySection_Shop = 8;
+    OverlaySection_ProductActivation = 9;
+    OverlaySection_PendingGameInvites = 10;
+    OverlaySection_Challenges = 11;
+    OverlaySection_GameOptions = 12;
+}
+
+enum OverlayState {
+    OverlayState_Error = 1;
+    OverlayState_Showing = 2;
+    OverlayState_Hidden = 3;
+}
+
+enum UserShutdownReason {
+    UserShutdownReason_AccountSharing = 1;
+}

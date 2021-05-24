@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package mg.protocol.recently_played;
+
+message GameSessionInfo {
+    required uint32 productId = 1;
+    required uint64 sessionEndedTimestamp = 2;
+}
+
+message RecentlyPlayedGames {
+    repeated GameSessionInfo games = 1;
+}

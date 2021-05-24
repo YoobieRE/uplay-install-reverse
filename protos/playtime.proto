@@ -1,0 +1,65 @@
+syntax = "proto2";
+
+package mg.playtime;
+
+message UpdatePlaytimeReq {
+    repeated uint32 product_ids = 1;
+    optional uint32 seconds_to_add = 2;
+    optional bool is_active_play_session = 3;
+    optional uint32 game_id = 4;
+}
+
+message UpdatePlaytimeRsp {
+    optional Result result = 1;
+}
+
+message GetPlaytimeReq {
+    optional string account_id = 1;
+    optional uint32 product_id = 2;
+}
+
+message GetPlaytimeRsp {
+    optional Result result = 1;
+    optional uint32 seconds = 2;
+    optional string last_played = 3;
+}
+
+message GetFriendsPlaytimeReq {
+    repeated string my_friends = 1;
+    optional uint32 game_id = 2;
+}
+
+message GetFriendsPlaytimeRsp {
+    optional Result result = 1;
+    repeated string my_friends = 2;
+}
+
+message Req {
+    optional uint32 request_id = 1;
+    optional UpdatePlaytimeReq update_playtime_req = 2;
+    optional GetPlaytimeReq get_playtime_req = 3;
+    optional GetFriendsPlaytimeReq get_friends_playtime_req = 4;
+}
+
+message Rsp {
+    optional uint32 request_id = 1;
+    optional UpdatePlaytimeRsp update_playtime_rsp = 2;
+    optional GetPlaytimeRsp get_playtime_rsp = 3;
+    optional GetFriendsPlaytimeRsp get_friends_playtime_rsp = 4;
+}
+
+message Upstream {
+    optional Req request = 1;
+}
+
+message Downstream {
+    optional Rsp response = 1;
+}
+
+enum Result {
+    Result_Success = 0;
+    Result_Failure = 1;
+    Result_TimeOut = 2;
+    Result_ServerError = 3;
+    Result_BadRequest = 4;
+}

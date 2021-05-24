@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+package mg.protocol.crash_reporter;
+
+message UploadDumpReq {
+    required string dump_filename = 1;
+    required string callstack_hash = 2;
+}
+
+message UploadDumpRsp {
+    required bool success = 1;
+}
+
+message Req {
+    optional UploadDumpReq upload_dump = 1;
+}
+
+message Rsp {
+    optional UploadDumpRsp upload_dump = 1;
+}
+
+message Upstream {
+    optional Req req = 1;
+}
+
+message Downstream {
+    optional Rsp rsp = 1;
+}

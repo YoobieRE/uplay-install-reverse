@@ -1,0 +1,53 @@
+syntax = "proto2";
+
+package mg.protocol.steam_service;
+
+message SteamUserInfo {
+    required string steam_id = 1;
+    optional string personaname = 2;
+    optional string avatar_url = 3;
+    optional CommunityVisibilityState community_visibility_state = 4;
+}
+
+message GetSteamFriendsReq {
+    required string steam_id = 1;
+}
+
+message GetSteamFriendsRsp {
+    repeated SteamUserInfo steam_friends = 1;
+    required bool success = 2;
+    optional bool public_account_required = 3;
+}
+
+message GetSteamUserInfoReq {
+    required string steam_id = 1;
+}
+
+message GetSteamUserInfoRsp {
+    optional SteamUserInfo steam_user_info = 1;
+    required bool success = 2;
+}
+
+message Req {
+    optional GetSteamFriendsReq get_steam_friends_req = 1;
+    optional GetSteamUserInfoReq get_steam_user_info_req = 2;
+}
+
+message Rsp {
+    optional GetSteamFriendsRsp get_steam_friends_rsp = 1;
+    optional GetSteamUserInfoRsp get_steam_user_info_rsp = 2;
+}
+
+message Upstream {
+    optional Req request = 1;
+}
+
+message Downstream {
+    optional Rsp response = 1;
+}
+
+enum CommunityVisibilityState {
+    CommunityVisibilityState_Unsupported = 0;
+    CommunityVisibilityState_Private = 1;
+    CommunityVisibilityState_Public = 3;
+}

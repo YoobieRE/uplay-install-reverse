@@ -1,0 +1,50 @@
+syntax = "proto2";
+
+package mg.protocol.download_cache;
+
+message Download {
+    required uint32 product_id = 1;
+    required string manifest_id = 2;
+    
+    required DownloadType download_type = 3;
+    enum DownloadType {
+        DownloadType_Edison = 0;
+        DownloadType_EdisonThirdParty = 1;
+        DownloadType_Legacy = 2;
+        DownloadType_Additional = 3;
+        DownloadType_Reward = 4;
+        DownloadType_LegacyAddOn = 5;
+    }
+    
+    required DownloadState download_state = 5;
+    enum DownloadState {
+        DownloadState_Init = 0;
+        DownloadState_ResumeFiles = 1;
+        DownloadState_InProgress = 2;
+        DownloadState_Paused = 3;
+        DownloadState_NetworkError = 4;
+        DownloadState_Failure = 5;
+        DownloadState_Cancelled = 6;
+        DownloadState_Completed = 7;
+        DownloadStatus_AllocatingDiskSpace = 8;
+    }
+    
+    optional uint32 additional_download_index = 6;
+    optional string additional_download_filename = 7;
+    
+    optional DownloadInitiator download_initiator = 8;
+    enum DownloadInitiator {
+        Unknown = 0;
+        BrandedInstaller = 1;
+        LaunchProtocol = 2;
+        InstallProtocol = 3;
+        InstallProtocolRetail = 4;
+    }
+    
+    optional string branded_installer_id = 9;
+}
+
+message DownloadCache {
+    required bool is_paused = 1;
+    repeated Download download = 2;
+}

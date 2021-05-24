@@ -1,0 +1,134 @@
+syntax = "proto3";
+
+package mg.protocol.wegame_service;
+
+message PlayerProfile {
+    string rail_id = 1;
+    string nick_name = 2;
+    string avatar_url = 3;
+}
+
+message FriendProfile {
+    string rail_id = 1;
+    string nick_name = 2;
+    string avatar_url = 3;
+    uint32 friend_timestamp = 4;
+    string common_id = 5;
+}
+
+message GetUserRailIdReq {
+    string common_id = 1;
+}
+
+message GetUserRailIdRsp {
+    string rail_id = 1;
+}
+
+message GetPlayerProfileReq {
+    string common_id = 1;
+}
+
+message GetPlayerProfileRsp {
+    PlayerProfile player_profile = 1;
+}
+
+message GetPlayerProfilesReq {
+    repeated string common_ids = 1;
+}
+
+message GetPlayerProfilesRsp {
+    repeated PlayerProfileEntry player_profiles = 1;
+    message PlayerProfileEntry {
+        string common_id = 1;
+        bool success = 2;
+        PlayerProfile player_profile = 3;
+    }
+}
+
+message GetFriendProfilesReq {
+    string common_id = 1;
+    uint32 count = 2;
+    uint32 start_index = 3;
+}
+
+message GetFriendProfilesRsp {
+    repeated FriendProfile friend_profiles = 1;
+}
+
+message GetIngameItemInfoReq {
+    uint64 wegame_product_id = 1;
+    string common_id = 2;
+    repeated uint32 ingame_item_package_ids = 3;
+}
+
+message IngameItemInfo {
+    uint32 ingame_item_package_id = 1;
+    float pack_original_price = 2;
+    float pack_discount_price = 3;
+    string currency_type = 4;
+    string pack_configuration = 5;
+    
+    ProductType product_type = 6;
+    enum ProductType {
+        ProductType_Unknown = 0;
+        ProductType_Normal = 1;
+        ProductType_Bundle = 2;
+        ProductType_Generator = 3;
+        ProductType_InGameCoin = 4;
+    }
+}
+
+message GetIngameItemInfoRsp {
+    repeated IngameItemInfo ingame_items = 1;
+}
+
+message GetIngameItemCheckoutUrlReq {
+    string rail_id = 1;
+    string session_ticket = 2;
+    uint64 wegame_product_id = 3;
+    uint32 ingame_item_package_id = 4;
+    string url_redirect = 5;
+}
+
+message GetIngameItemCheckoutUrlRsp {
+    string wegame_checkout_url = 1;
+}
+
+message Req {
+    uint32 request_id = 1;
+    GetUserRailIdReq get_user_rail_id_req = 2;
+    GetPlayerProfileReq get_player_profile_req = 3;
+    GetFriendProfilesReq get_friend_profiles_req = 4;
+    GetIngameItemInfoReq get_ingame_item_info_req = 5;
+    GetIngameItemCheckoutUrlReq get_ingame_item_checkout_url_req = 6;
+    GetPlayerProfilesReq get_player_profiles_req = 7;
+}
+
+message Rsp {
+    uint32 request_id = 1;
+    Status status = 2;
+    GetUserRailIdRsp get_user_rail_id_rsp = 3;
+    GetPlayerProfileRsp get_player_profile_rsp = 4;
+    GetFriendProfilesRsp get_friend_profiles_rsp = 5;
+    GetIngameItemInfoRsp get_ingame_item_info_rsp = 6;
+    GetIngameItemCheckoutUrlRsp get_ingame_item_checkout_url_rsp = 7;
+    GetPlayerProfilesRsp get_player_profiles_rsp = 8;
+}
+
+message Upstream {
+    Req request = 1;
+}
+
+message Downstream {
+    Rsp response = 1;
+}
+
+enum Status {
+    Status_Unknown = 0;
+    Status_Ok = 1;
+    Status_EmptyResult = 2;
+    Status_InternalError = 3;
+    Status_Denied = 4;
+    Status_TimedOut = 5;
+    Status_ParameterError = 6;
+}

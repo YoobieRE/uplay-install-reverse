@@ -1,0 +1,50 @@
+syntax = "proto2";
+
+package mg.protocol.ownership_cache;
+
+message OwnedGame {
+    required uint32 product_id = 1;
+    optional uint32 uplay_id = 2;
+    optional uint32 download_id = 9;
+    optional uint32 orbit_id = 3;
+    optional string cd_key = 4;
+    optional uint32 platform = 5;
+    optional uint32 product_type = 6;
+    optional uint32 state = 7;
+    repeated uint32 product_associations = 8;
+    optional string game_code = 10;
+    optional uint32 brand_id = 11;
+    optional bool pending_keystorage_ownership = 12;
+    optional string legacy_space_id = 13;
+    optional string legacy_app_id = 14;
+    optional string game_token = 15;
+    repeated uint32 activation_ids = 16;
+    
+    optional TargetPartner target_partner = 17;
+    enum TargetPartner {
+        TargetPartner_None = 0;
+        TargetPartner_EpicGames = 1;
+    }
+    
+    optional ActivationType activation_type = 18;
+    enum ActivationType {
+        ActivationType_Purchase = 0;
+        ActivationType_Trial = 1;
+        ActivationType_Subscription = 2;
+    }
+    
+    optional string ubiServices_app_id = 19;
+    
+    enum PackageState {
+        PackageState_Unavailable = 0;
+        PackageState_PreReleased = 1;
+        PackageState_PreDownloadable = 2;
+        PackageState_Released = 3;
+        PackageState_Expired = 4;
+    }
+}
+
+message OwnershipCache {
+    repeated OwnedGame owned_games = 1;
+    repeated uint32 product_ids = 2;
+}

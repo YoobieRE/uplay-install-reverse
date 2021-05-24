@@ -1,0 +1,140 @@
+syntax = "proto2";
+
+package mg.protocol.user_settings;
+
+message FavouriteGame {
+    required uint32 productId = 1;
+}
+
+message HiddenGame {
+    required uint32 productId = 1;
+}
+
+message FavouriteGames {
+    repeated FavouriteGame games = 1;
+}
+
+message HiddenGames {
+    repeated HiddenGame games = 1;
+}
+
+message PlayedGame {
+    required uint32 productId = 1;
+    required uint32 exeIndex = 2;
+    required uint32 timestamp = 3;
+    optional uint32 playTime = 4;
+}
+
+message PlayedGames {
+    repeated PlayedGame games = 1;
+}
+
+message ProductBranch {
+    required uint32 productId = 1;
+    optional uint32 branchId = 2;
+    optional bool useDefault = 3;
+    optional string password = 4;
+}
+
+message ProductBranches {
+    repeated ProductBranch branches = 1;
+}
+
+message KnownBranch {
+    required uint32 productId = 1;
+    optional uint32 branchId = 2;
+    optional string branchName = 3;
+    optional string password = 4;
+}
+
+message KnownBranches {
+    repeated KnownBranch branches = 1;
+}
+
+message AutoPatchBlacklistProduct {
+    required uint32 productId = 1;
+}
+
+message AutoPatching {
+    repeated AutoPatchBlacklistProduct products = 1;
+}
+
+message GameLibrary {
+    optional GameLibraryStyle style = 1 [default = GameLibraryStyle_Thumbs];
+    optional GameLibraryThumbSize thumbSize = 2 [default = GameLibraryThumbSize_Medium];
+    optional GameLibraryListStyle listStyle = 3 [default = GameLibraryListStyle_Wide];
+    optional bool show_favorite_games = 4 [default = true];
+    optional bool show_owned_games = 5 [default = true];
+    optional bool show_installed_games = 6 [default = true];
+    optional bool show_free_games = 7 [default = true];
+    optional bool show_other_games = 8 [default = true];
+}
+
+message GameStartArguments {
+    optional uint32 gameid = 1;
+    optional string arguments = 2;
+}
+
+message GamesStartArguments {
+    repeated GameStartArguments gameStartArguments = 1;
+}
+
+message News {
+    optional string display_mode = 1;
+    repeated string filter = 2;
+}
+
+message PromoTab {
+    optional uint32 promo_tab_id = 1;
+}
+
+message SeenPromoTabs {
+    repeated PromoTab seen_promo_tabs = 1;
+}
+
+message UserSettings {
+    optional FavouriteGames favouriteGames = 1;
+    optional HiddenGames hiddenGames = 2;
+    optional PlayedGames lastPlayedGames = 4;
+    optional ProductBranches productBranches = 5;
+    optional KnownBranches knownBranches = 6;
+    optional bool dontUploadCrashReports = 7;
+    optional AutoPatching autoPatching = 8;
+    optional string activityStatus = 9;
+    optional uint64 spotlightShownTimestamp = 11;
+    optional bool remindMeOfSteamLinking = 13;
+    optional GameLibrary gameLibrary = 14;
+    optional GamesStartArguments gamesStartArguments = 16;
+    optional uint64 expiredSecurityPromptTimestamp = 17;
+    optional string lastDismissedPromoBubbleId = 18;
+    optional News news = 19;
+    optional SecurityPromptState lastSecurityPromptState = 20 [default = SecurityPromptState_None];
+    optional uint64 lastEmailVerificPromptTimestamp = 21;
+    optional string lastdissmisseduplayplusbubbleid = 22;
+    optional bool isexpirationbannerdisabled = 23;
+    optional SeenPromoTabs seenPromoTabs = 24;
+    optional bool isunavailablebannerdisabled = 25;
+}
+
+enum GameLibraryStyle {
+    GameLibraryStyle_Thumbs = 0;
+    GameLibraryStyle_List = 1;
+}
+
+enum GameLibraryThumbSize {
+    GameLibraryThumbSize_Small = 0;
+    GameLibraryThumbSize_Medium = 1;
+    GameLibraryThumbSize_Large = 2;
+}
+
+enum GameLibraryListStyle {
+    GameLibraryListStyle_Wide = 0;
+    GameLibraryListStyle_Narrow = 1;
+}
+
+enum SecurityPromptState {
+    SecurityPromptState_None = 0;
+    SecurityPromptState_2FA = 1;
+    SecurityPromptState_EmailVerification = 2;
+    SecurityPromptState_PhoneCollection = 3;
+}

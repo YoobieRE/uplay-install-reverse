@@ -1,0 +1,176 @@
+syntax = "proto2";
+
+package mg.protocol.settings;
+
+import "google/protobuf/descriptor.proto";
+
+message User {
+    optional string username = 1;
+    optional string password = 2;
+    optional bool remember = 3 [default = true];
+    optional bool syncsavegames = 4 [default = true];
+    optional bool forceoffline = 5 [default = false];
+    optional CloseBehavior closebehavior = 6 [default = CloseBehavior_Undefined];
+    optional string username_uat = 7;
+    optional string password_uat = 8;
+    optional LandingPage landingpage = 9 [default = LandingPageNews];
+    optional string remember_ticket_uat = 11;
+    optional string remember_ticket = 12;
+    optional bool start_on_windows_start = 13 [default = false];
+    optional bool non_friend_game_invite_enabled = 14 [default = true];
+    optional bool remember_uat = 15 [default = true];
+}
+
+message Overlay {
+    optional bool enabled = 1 [default = true];
+    optional bool forceunhookgame = 2 [default = false];
+    optional bool fps_enabled = 3 [default = false];
+    optional bool warning_enabled = 4 [default = true];
+}
+
+message Language {
+    optional string code = 1 [default = "en-US"];
+}
+
+message Misc {
+    optional string installer_cache_path = 1;
+    optional string screenshot_root_path = 2;
+    optional bool enable_screenshots_on_achievements = 3 [default = false];
+    optional string game_installation_path = 4;
+    optional bool enable_auto_wall_posts = 5 [default = true];
+    optional bool save_screenshot_uncompressed_copy = 6 [default = false];
+}
+
+message Position {
+    optional uint32 left = 1 [default = 0];
+    optional uint32 top = 2 [default = 0];
+    optional uint32 width = 3 [default = 0];
+    optional uint32 height = 4 [default = 0];
+    optional bool maximized = 5 [default = false];
+}
+
+message ModelessPositions {
+    optional Position friends_window = 1;
+    optional Position conversations_window = 2;
+}
+
+message Notifications {
+    optional bool inGameEnabled = 1 [default = true];
+    optional bool permanentInGameEnabled = 2 [default = true];
+    optional bool inGameFriendOnlineEnabled = 3 [default = true];
+    optional bool sysTrayEnabled = 4 [default = true];
+    optional bool desktopFriendRequestEnabled = 5 [default = true];
+    optional bool desktopFriendOnlineEnabled = 6 [default = true];
+    optional bool desktopChatEnabled = 7 [default = true];
+    optional bool desktopFriendGameEnabled = 8 [default = true];
+    optional bool desktopGameInviteEnabled = 9 [default = true];
+    optional bool desktopPartyInviteEnabled = 10 [default = true];
+    optional bool desktopDownloadCompleteEnabled = 11 [default = true];
+    optional bool desktopGamePatchAvailableEnabled = 12 [default = true];
+    optional bool desktopPlayAvailableEnabled = 13 [default = true];
+    optional bool desktopGroupInviteEnabled = 14 [default = true];
+    optional bool desktopScreenshotsEnabled = 15 [default = true];
+    optional bool desktopAchievementsEnabled = 16 [default = true];
+    optional bool desktopClubActionsEnabled = 17 [default = false];
+}
+
+message Masters {
+    optional string username = 1;
+    optional string password = 2;
+}
+
+message Restart {
+    optional string username = 1;
+    optional string password = 2;
+    optional string error = 3;
+    optional string errorEmail = 4;
+    optional string errorTitle = 5;
+    optional bool restartInOfflineMode = 6 [default = false];
+    optional bool shutdownAfterErrorShown = 7 [default = false];
+}
+
+message Hotkey {
+    optional uint32 keyCode = 1 [default = 0];
+    optional bool altState = 2 [default = false];
+    optional bool shiftState = 3 [default = false];
+    optional bool controlState = 4 [default = false];
+}
+
+message Downloads {
+    optional uint64 limit = 1 [default = 10000000];
+    optional bool limitEnabled = 2 [default = false];
+    optional bool pauseOnGameLaunch = 3 [default = true];
+}
+
+message Betas {
+    optional bool optIn = 1 [default = false];
+}
+
+message AutoPatching {
+    optional bool enabled = 1 [default = true];
+}
+
+message Spotlight {
+    optional bool enabled = 1 [default = true];
+}
+
+message Conversations {
+    optional bool taskbarTabsEnabled = 1 [default = false];
+}
+
+message Epic {
+    optional string exchangeCode = 1;
+}
+
+message BrandedInstaller {
+    optional string pending_protocol = 1;
+}
+
+message SettingsModel {
+    optional User user = 1;
+    optional Overlay overlay = 2;
+    optional Language language = 3;
+    optional Misc misc = 4;
+    optional Position position = 5;
+    optional Notifications notifications = 6;
+    optional Masters masters = 7;
+    optional Restart restart = 8;
+    optional Hotkey hotkeys_overlayToggle = 9;
+    optional Hotkey hotkeys_overlayHide = 10;
+    optional Hotkey hotkeys_captureScreenshot = 11;
+    optional Downloads downloads = 12;
+    optional Betas betas = 13;
+    optional AutoPatching autoPatching = 14;
+    optional Spotlight spotlight = 15;
+    optional ModelessPositions modeless_positions = 16;
+    optional Conversations conversations = 17;
+    optional Epic epic = 18;
+    optional BrandedInstaller branded_installer = 19;
+}
+
+enum ProxyType {
+    ProxyType_None = 0;
+    ProxyType_Auto = 1;
+    ProxyType_Forced = 2;
+}
+
+enum CloseBehavior {
+    CloseBehavior_Undefined = 0;
+    CloseBehavior_Close = 1;
+    CloseBehavior_Minimize = 2;
+}
+
+enum LandingPage {
+    LandingPageNews = 0;
+    LandingPageGames = 1;
+    LandingPageLastPlayedGame = 2;
+    LandingPageUplayPlus = 3;
+}
+
+extend google.protobuf.FieldOptions {
+    optional bool disableStatsTracking = 50000;
+}
+
+extend google.protobuf.MessageOptions {
+    optional bool disableMessageStatsTracking = 50001;
+}

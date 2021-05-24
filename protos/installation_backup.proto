@@ -1,0 +1,64 @@
+syntax = "proto2";
+
+package mg.protocol.installation_backup;
+
+message LicenseLocale {
+    required string language = 1;
+    required bytes sha1 = 2;
+    optional string text = 3;
+    optional string name = 4;
+}
+
+message License {
+    required string identifier = 1;
+    required uint32 version = 2;
+    repeated LicenseLocale locales = 3;
+    optional LicenseFormat format = 4;
+}
+
+message Slice {
+    optional bytes sha1 = 1;
+    optional uint32 size = 2;
+    optional uint64 offset = 3;
+}
+
+message Archive {
+    optional string filename = 1;
+    optional uint64 size = 2;
+    repeated Slice slices = 3;
+}
+
+message Disc {
+    optional uint32 number = 1;
+    optional string label = 2;
+    repeated Archive archives = 3;
+}
+
+message TextFile {
+    required string language = 1;
+    required string fileName = 2;
+}
+
+message Autorun {
+    optional string gameTitle = 1;
+    repeated TextFile readmeFiles = 2;
+    repeated TextFile manualFiles = 3;
+}
+
+message InstallationBackup {
+    required uint32 version = 1;
+    optional uint32 productId = 2;
+    repeated Disc discs = 3;
+    repeated License licenses = 4;
+    optional string manifestSha1 = 5;
+    optional string environment = 6;
+    optional Autorun autorun = 7;
+    repeated string languages = 8;
+    optional bytes sha1 = 9;
+    repeated uint32 productPackUplayIds = 10;
+}
+
+enum LicenseFormat {
+    LicenseFormat_Text = 1;
+    LicenseFormat_Html = 2;
+}

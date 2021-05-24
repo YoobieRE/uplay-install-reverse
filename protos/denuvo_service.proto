@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package mg.protocol.denuvo_service;
+
+message GetGameTokenReq {
+    string ownership_token = 1;
+    bytes request_token = 2;
+}
+
+message GetGameTokenRsp {
+    bytes game_token = 1;
+}
+
+message GetGameTimeTokenReq {
+    string ownership_token = 1;
+    bytes request_token = 2;
+}
+
+message GetGameTimeTokenRsp {
+    bytes time_token = 1;
+    uint32 time_token_ttl_sec = 2;
+}
+
+message Req {
+    uint32 request_id = 1;
+    GetGameTokenReq get_game_token_req = 2;
+    GetGameTimeTokenReq get_game_time_token_req = 3;
+}
+
+message Rsp {
+    uint32 request_id = 1;
+    
+    Result result = 2;
+    enum Result {
+        Success = 0;
+        NotOwned = 1;
+        Failure = 2;
+        ExceededActivations = 3;
+        TimeOut = 4;
+        ServerError = 5;
+    }
+    
+    GetGameTokenRsp get_game_token_rsp = 3;
+    GetGameTimeTokenRsp get_game_time_token_rsp = 4;
+}
+
+message Upstream {
+    Req request = 1;
+}
+
+message Downstream {
+    Rsp response = 1;
+}

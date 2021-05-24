@@ -1,0 +1,405 @@
+syntax = "proto2";
+
+package mg.protocol.friends;
+
+message ReconnectInfo {
+    required bool reconnect_success = 1;
+}
+
+message DeprecatedInitializeReq {
+    required bytes ubi_token = 1;
+    optional uint64 deprecated_cookie = 2;
+    optional Game game = 3;
+    optional bytes rich_presence_deprecated = 4;
+    optional Status.ActivityStatus activity_status = 6;
+    optional string ubi_ticket = 7;
+    optional uint32 proto_version = 8;
+    optional string localization = 9;
+    optional bool is_staging = 10;
+}
+
+message DeprecatedInitializeRsp {
+    required bool success = 1;
+    optional uint64 deprecated_cookie = 2;
+    optional ReconnectInfo deprecated_reconnect_info = 3;
+    repeated Relationship relationship = 4;
+}
+
+message InitializeReq {
+    optional uint32 proto_version = 1;
+    optional Game game = 2;
+    optional Status.ActivityStatus activity_status = 4;
+    optional string ubi_ticket = 5;
+    optional string localization = 6;
+    optional bool is_staging = 7;
+    optional string sessiond_id = 8;
+}
+
+message InitializeRsp {
+    required bool success = 1;
+    repeated Relationship relationship = 2;
+}
+
+message Friend {
+    required string account_id = 1;
+    optional string name_on_platform = 2;
+    optional string nickname = 3;
+    optional bool isFavorite = 4;
+}
+
+message DeprecatedFriendsNick {
+    required Friend user = 1;
+    required string nick = 2;
+}
+
+message Relationship {
+    required bool blacklisted = 1;
+    required Friend friend = 2;
+    
+    required Relation relation = 3;
+    enum Relation {
+        NoRelationship = 0;
+        PendingSentInvite = 1;
+        PendingReceivedInvite = 2;
+        Friends = 3;
+    }
+    
+    optional uint64 deprecated_change_id = 4;
+    optional string change_date = 5;
+}
+
+message Game {
+    required uint32 uplay_id = 1;
+    optional string product_name = 3;
+    optional GameSession game_session = 2;
+}
+
+message GameSession {
+    optional uint64 game_session_id = 1;
+    optional string game_session_id_v2 = 4;
+    required bytes game_session_data = 2;
+    required bool joinable = 3;
+    optional uint32 size = 5;
+    optional uint32 max_size = 6;
+}
+
+message SetGameReq {
+    optional Game game = 1;
+}
+
+message SetGameRsp {
+    required bool success = 1;
+}
+
+message RichPresenceTokenPair {
+    optional string key = 1;
+    optional string val = 2;
+}
+
+message RichPresenceState {
+    optional uint32 product_id = 1;
+    optional uint32 presence_id = 2;
+    repeated RichPresenceTokenPair presence_tokens = 3;
+}
+
+message SetRichPresenceReqDeprecated {
+    required bytes rich_presence_deprecated = 1;
+}
+
+message SetRichPresenceRspDeprecated {
+    required bool success = 1;
+}
+
+message SetRichPresenceReq {
+    optional RichPresenceState presence_state = 1;
+}
+
+message SetRichPresenceRsp {
+    optional bool success = 1;
+    optional string localized_rich_presence = 2;
+}
+
+message SetActivityStatusReq {
+    required Status.ActivityStatus activity_status = 1;
+}
+
+message SetActivityStatusRsp {
+    required bool success = 1;
+}
+
+message Status {
+    required Friend user = 1;
+    
+    required OnlineStatus online_status = 2;
+    enum OnlineStatus {
+        Offline = 0;
+        Online = 1;
+        InGame = 2;
+    }
+    
+    optional Game game = 3;
+    optional bytes rich_presence_deprecated = 4;
+    
+    optional VoipStatus voip_status = 5;
+    enum VoipStatus {
+        Deprecated1 = 0;
+        Deprecated2 = 1;
+        Deprecated3 = 2;
+    }
+    
+    optional ActivityStatus activity_status = 6;
+    enum ActivityStatus {
+        Normal = 0;
+        Away = 1;
+        Busy = 2;
+        Invisible = 3;
+    }
+    
+    optional string localized_rich_presence = 7;
+}
+
+message GetRelationshipsListReq {
+    
+}
+
+message GetRelationshipsListRsp {
+    repeated Relationship relationship = 1;
+    required bool ok = 2;
+}
+
+message FindFriendReq {
+    optional string search_query_username = 1;
+    optional string email = 2;
+}
+
+message FindFriendRsp {
+    repeated Friend alternatives = 1;
+    required bool ok = 2;
+}
+
+message GetStatusReq {
+    repeated Friend users = 1;
+}
+
+message GetStatusRsp {
+    repeated Status statuses = 1;
+    required bool ok = 2;
+}
+
+message DeprecatedGetNickReq {
+    repeated Friend users = 1;
+}
+
+message DeprecatedGetNickRsp {
+    repeated DeprecatedFriendsNick nicks = 1;
+    required bool ok = 2;
+}
+
+message AcceptFriendshipReq {
+    required Friend user = 1;
+}
+
+message AcceptFriendshipRsp {
+    required bool ok = 1;
+}
+
+message GetBlacklistReq {
+    optional string user = 1;
+}
+
+message GetBlacklistRsp {
+    optional bool success = 1;
+    repeated string blacklist = 2;
+}
+
+message AddToBlacklistReq {
+    required Friend user = 1;
+}
+
+message AddToBlacklistRsp {
+    required bool ok = 1;
+}
+
+message ClearRelationshipReq {
+    required Friend user = 1;
+}
+
+message ClearRelationshipRsp {
+    required bool ok = 1;
+}
+
+message DeclineFriendshipReq {
+    required Friend user = 1;
+}
+
+message DeclineFriendshipRsp {
+    required bool ok = 1;
+}
+
+message RemoveFromBlacklistReq {
+    required Friend user = 1;
+}
+
+message RemoveFromBlacklistRsp {
+    required bool ok = 1;
+}
+
+message RequestFriendshipReq {
+    required Friend user = 1;
+}
+
+message RequestFriendshipRsp {
+    required bool ok = 1;
+}
+
+message RequestFriendshipsReq {
+    repeated Friend users = 1;
+}
+
+message RequestFriendshipsRsp {
+    repeated bool ok = 1;
+}
+
+message JoinGameInvite {
+    required string account_id_from = 1;
+    required Game game = 3;
+    optional string deprecated_product_name = 2;
+}
+
+message JoinGameInvitationReq {
+    required string account_id_to = 1;
+    required Game game = 3;
+    optional string deprecated_product_name = 2;
+}
+
+message JoinGameInvitationRsp {
+    required bool ok = 1;
+}
+
+message DeclineGameInviteReq {
+    required string account_id = 1;
+}
+
+message DeclineGameInviteRsp {
+    required bool success = 1;
+}
+
+message UbiTicketRefreshReq {
+    required string ubi_ticket = 1;
+}
+
+message UbiTicketRefreshRsp {
+    required bool success = 1;
+}
+
+message SetNicknameReq {
+    required string account_id = 1;
+    required string nickname = 2;
+}
+
+message SetNicknameRsp {
+    required bool success = 1;
+}
+
+message Req {
+    required uint32 request_id = 1;
+    optional DeprecatedInitializeReq deprecated_initialize_req = 2;
+    optional GetRelationshipsListReq deprecated_get_relationships_list_req = 3;
+    optional AcceptFriendshipReq accept_friendship_req = 4;
+    optional AddToBlacklistReq add_to_blacklist_req = 5;
+    optional ClearRelationshipReq clear_relationship_req = 6;
+    optional DeclineFriendshipReq decline_friendship_req = 7;
+    optional RemoveFromBlacklistReq remove_from_blacklist_req = 8;
+    optional RequestFriendshipReq deprecated_request_friendship_req = 9;
+    optional FindFriendReq find_friend_req = 10;
+    optional GetStatusReq deprecated_get_status_req = 11;
+    optional DeprecatedGetNickReq get_nick_req = 12;
+    optional SetGameReq set_game_req = 13;
+    optional JoinGameInvitationReq join_game_invitation_req = 14;
+    optional SetRichPresenceReqDeprecated set_rich_presence_req_deprecated = 15;
+    optional RequestFriendshipsReq request_friendships_req = 17;
+    optional SetActivityStatusReq set_activity_status_req = 18;
+    optional SetRichPresenceReq set_rich_presence_req = 19;
+    optional DeclineGameInviteReq decline_game_invite_req = 20;
+    optional UbiTicketRefreshReq ubi_ticket_refresh_req = 21;
+    optional InitializeReq initialize_req = 22;
+    optional SetNicknameReq set_nickname_req = 23;
+    optional GetBlacklistReq get_blacklist_req = 24;
+}
+
+message Rsp {
+    required uint32 request_id = 1;
+    optional DeprecatedInitializeRsp deprecated_initialize_rsp = 2;
+    optional GetRelationshipsListRsp deprecated_get_relationships_list_rsp = 3;
+    optional AcceptFriendshipRsp accept_friendship_rsp = 4;
+    optional AddToBlacklistRsp add_to_blacklist_rsp = 5;
+    optional ClearRelationshipRsp clear_relationship_rsp = 6;
+    optional DeclineFriendshipRsp decline_friendship_rsp = 7;
+    optional RemoveFromBlacklistRsp remove_from_blacklist_rsp = 8;
+    optional RequestFriendshipRsp deprecated_request_friendship_rsp = 9;
+    optional FindFriendRsp find_friend_rsp = 10;
+    optional GetStatusRsp deprecated_get_status_rsp = 11;
+    optional DeprecatedGetNickRsp get_nick_rsp = 12;
+    optional SetGameRsp set_game_rsp = 13;
+    optional JoinGameInvitationRsp join_game_invitation_rsp = 14;
+    optional SetRichPresenceRspDeprecated set_rich_presence_rsp_deprected = 15;
+    optional RequestFriendshipsRsp request_friendships_rsp = 17;
+    optional SetActivityStatusRsp set_activity_status_rsp = 18;
+    optional SetRichPresenceRsp set_rich_presence_rsp = 19;
+    optional DeclineGameInviteRsp decline_game_invite_rsp = 20;
+    optional UbiTicketRefreshRsp ubi_ticket_refresh_rsp = 21;
+    optional InitializeRsp initialize_rsp = 22;
+    optional SetNicknameRsp set_nickname_rsp = 23;
+    optional GetBlacklistRsp get_blacklist_rsp = 24;
+}
+
+message PushUpdatedRelationship {
+    required Relationship relationship = 1;
+}
+
+message PushUpdatedStatus {
+    required Status updates_status = 1;
+    optional bool is_initial_status = 2;
+}
+
+message PushJoinGameInvitation {
+    required JoinGameInvite invite = 1;
+}
+
+message PushRecentlyMetPlayers {
+    required uint32 uplay_id = 1;
+    repeated string account_ids = 2;
+}
+
+message PushGameInviteDeclined {
+    required string account_id = 1;
+}
+
+message PushNicknameUpdate {
+    required string friend_account_id = 1;
+    required string nickname = 2;
+}
+
+message PushIsFavoriteUpdate {
+    required string friend_account_id = 1;
+    required bool isFavorite = 2;
+}
+
+message Push {
+    optional PushUpdatedRelationship push_updated_relationship = 1;
+    optional PushUpdatedStatus push_updated_status = 2;
+    optional PushJoinGameInvitation push_join_game_invitation = 3;
+    optional PushRecentlyMetPlayers push_recently_met_players = 4;
+    optional PushGameInviteDeclined push_game_invite_declined = 5;
+    optional PushNicknameUpdate push_nickname_update = 6;
+    optional PushIsFavoriteUpdate push_isFavorite_update = 7;
+}
+
+message Upstream {
+    optional Req request = 1;
+}
+
+message Downstream {
+    optional Rsp response = 1;
+    optional Push push = 2;
+}

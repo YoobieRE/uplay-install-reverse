@@ -1,0 +1,87 @@
+syntax = "proto2";
+
+package mg.protocol.uplayauxdll;
+
+message DevArgs {
+    optional bool uatOnly = 1;
+}
+
+message InitReq {
+    required uint32 uplayId = 1;
+    optional DevArgs devArgs = 2;
+}
+
+message InitRsp {
+    required InitResult result = 1;
+    optional uint32 uplayPID = 2;
+}
+
+message InvalidateCachedTokenReq {
+    
+}
+
+message GetCachedOrFreshTokenReq {
+    required bytes requestToken = 2;
+}
+
+message GetBurnTicketReq {
+    required bytes requestToken = 2;
+}
+
+message GetCachedOrFreshTokenRsp {
+    required OperationResult result = 2;
+    optional uint32 errorCode = 3;
+    optional bytes gameToken = 4;
+}
+
+message GetBurnTicketRsp {
+    required OperationResult result = 2;
+    optional uint32 errorCode = 3;
+    optional bytes burnTicket = 4;
+    optional uint64 gracePeriodSec = 5;
+}
+
+message ActivateReq {
+    optional InvalidateCachedTokenReq invalidateCachedTokenReq = 1;
+    optional GetCachedOrFreshTokenReq getCachedOrFreshTokenReq = 2;
+    optional GetBurnTicketReq getBurnTicketReq = 3;
+}
+
+message ActivateRsp {
+    optional GetCachedOrFreshTokenRsp getCachedOrFreshTokenRsp = 2;
+    optional GetBurnTicketRsp getBurnTicketRsp = 3;
+}
+
+message Req {
+    optional uint32 requestId = 1;
+    optional InitReq initReq = 2;
+    optional ActivateReq activateReq = 3;
+}
+
+message Rsp {
+    optional uint32 requestId = 1;
+    optional InitRsp initRsp = 2;
+    optional ActivateRsp activateRsp = 3;
+}
+
+enum OperationResult {
+    ok = 1;
+    invalidArgument = 2;
+    connectionError = 3;
+}
+
+enum InitResult {
+    InitResult_Success = 1;
+    InitResult_Failure = 2;
+    InitResult_ReconnectRequired = 3;
+}
+
+enum ErrorType {
+    ErrorType_ActivationLimitExceeded = 1;
+    ErrorType_ActivationFailed = 2;
+    ErrorType_NoOnlineConnection = 3;
+    ErrorType_NoOwnership = 4;
+    ErrorType_Timeout = 5;
+    ErrorType_InternalServerError = 6;
+    ErrorType_ErrorDetailCodeOnly = 7;
+}

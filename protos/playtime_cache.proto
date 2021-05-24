@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package mg.protocol.playtime_cache;
+
+message PlaytimeItem {
+    required uint32 product_id = 1;
+    optional uint32 seconds_buffer = 2;
+}
+
+message PlaytimeCache {
+    required uint32 version = 1;
+    repeated PlaytimeItem playtimes = 2;
+}

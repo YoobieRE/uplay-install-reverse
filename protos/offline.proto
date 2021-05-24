@@ -1,0 +1,26 @@
+syntax = "proto2";
+
+package mg.protocol.offline;
+
+message UserInfo {
+    optional string username = 1;
+    optional string password = 2;
+    required string ubiAccountId = 3;
+    optional string nickname = 4;
+    optional string email = 5;
+    optional string name = 6;
+    optional bytes password_hash = 7;
+    optional bytes password_salt = 8;
+    optional string email_hash = 9;
+}
+
+message LastUserInfo {
+    optional string email = 1;
+    optional string password = 2;
+}
+
+message Users {
+    repeated UserInfo users = 1;
+    optional LastUserInfo lastUser = 2;
+    optional LastUserInfo lastUserUat = 3;
+}

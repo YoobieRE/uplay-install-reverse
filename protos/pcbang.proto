@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package mg.pcbang;
+
+message InitializeReq {
+    string provider = 1;
+}
+
+message InitializeRsp {
+    Result result = 1;
+    repeated string pre_ownership_tokens = 2;
+}
+
+message NeowizSpendPointsReq {
+    uint32 product_id = 1;
+    SpendingAction spending_action = 2;
+}
+
+message NeowizSpendPointsRsp {
+    Result result = 1;
+    string token = 2;
+    string error_msg = 3;
+}
+
+message Req {
+    uint32 request_id = 1;
+    
+    oneof Request {
+        InitializeReq initialize_req = 2;
+        NeowizSpendPointsReq neowiz_spend_points_req = 3;
+    }
+}
+
+message Rsp {
+    uint32 request_id = 1;
+    
+    oneof Response {
+        InitializeRsp initialize_rsp = 2;
+        NeowizSpendPointsRsp neowiz_spend_points_rsp = 3;
+    }
+}
+
+message Upstream {
+    Req request = 1;
+}
+
+message Downstream {
+    Rsp response = 1;
+}
+
+enum Result {
+    OK = 0;
+    Error = 1;
+    InvalidIp = 2;
+    NoPoints = 3;
+    Timeout = 4;
+}
+
+enum SpendingAction {
+    Start = 0;
+    Ping = 1;
+    End = 2;
+}

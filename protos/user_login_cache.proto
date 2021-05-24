@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package mg.protocol.user_login_cache;
+
+message User {
+    optional string account_id = 1;
+    optional string email_hash = 2;
+    optional string rd_ticket = 3;
+}
+
+message UserLoginCache {
+    optional uint32 version = 1;
+    repeated User users = 2;
+}

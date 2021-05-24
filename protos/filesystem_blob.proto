@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package mg.protocol.filesystem_blob;
+
+message File {
+    required string name = 1;
+    required bytes content = 2;
+}
+
+message Directory {
+    required string name = 1;
+    repeated Directory directories = 2;
+    repeated File files = 3;
+}

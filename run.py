@@ -5,7 +5,7 @@ from protobuf_inspector.types import StandardParser
 from google.protobuf.json_format import MessageToJson
 from google.protobuf.message import DecodeError
 from google.protobuf import text_format
-import protos.download_pb2 as Download
+import classes.protos.download_pb2 as Download
 import json
 
 def print_sample(plaintextBytes, cipher):

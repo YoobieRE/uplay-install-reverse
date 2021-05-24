@@ -1,0 +1,77 @@
+syntax = "proto2";
+
+package mg.protocol.control_panel;
+
+message AccountCache {
+    required string email = 1;
+    required string password = 2;
+    required string comment = 3;
+    
+    required Environment environment = 4;
+    enum Environment {
+        Environment_DEV = 0;
+        Environment_UAT = 1;
+        Environment_PROD = 2;
+    }
+}
+
+message AccountsCache {
+    repeated AccountCache accounts = 1;
+}
+
+message ClientCache {
+    required string name = 1;
+    required string path = 2;
+    optional string param = 3;
+}
+
+message ClientsCache {
+    repeated ClientCache clients = 1;
+}
+
+message JsonMessage {
+    required string name = 1;
+    required string message = 2;
+}
+
+message BinaryProto {
+    optional bytes friends = 1;
+    optional bytes ownership = 2;
+    optional bytes group = 3;
+}
+
+message CmdSetSdkMonitoringEnabled {
+    required bool enabled = 1;
+}
+
+message InitializeReq {
+    optional string id = 2;
+}
+
+message InitializeRsp {
+    optional bool success = 1;
+}
+
+message Req {
+    optional JsonMessage json_message = 1;
+    optional BinaryProto binary_proto = 2;
+    optional InitializeReq initialize_req = 3;
+}
+
+message Rsp {
+    optional JsonMessage json_message = 1;
+    optional InitializeRsp intialize_rsp = 2;
+}
+
+message Push {
+    optional JsonMessage json_message = 1;
+}
+
+message Upstream {
+    optional Req req = 1;
+}
+
+message Downstream {
+    optional Push push = 1;
+    optional Rsp rsp = 2;
+}

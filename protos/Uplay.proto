@@ -1,0 +1,66 @@
+syntax = "proto2";
+
+package mg.protocol.uplay;
+
+message Achievement {
+    required uint32 achievement_id = 1;
+    optional uint64 timestamp = 2;
+}
+
+message Achievements {
+    repeated Achievement achievements = 1;
+}
+
+message Product {
+    required string product_id = 1;
+    required string platform_id = 2;
+}
+
+message ProductAchievements {
+    required Product product = 1;
+    required Achievements achievements = 2;
+}
+
+message AchievementBlob {
+    repeated ProductAchievements product_achievements = 1;
+}
+
+message AuthenticateReq {
+    required string orbit_token = 1;
+}
+
+message AuthenticateRsp {
+    required bool success = 1;
+}
+
+message WriteAchievementsReq {
+    optional AchievementBlob achievement_blob = 1;
+}
+
+message WriteAchievementsRsp {
+    
+}
+
+message ReadAchievementsReq {
+    optional string user_id = 1;
+    optional Product product = 2;
+}
+
+message ReadAchievementsRsp {
+    required string user_id = 1;
+    required AchievementBlob achievement_blob = 2;
+}
+
+message Req {
+    required uint32 request_id = 1;
+    optional AuthenticateReq authenticate_req = 2;
+    optional ReadAchievementsReq read_achievements_req = 3;
+    optional WriteAchievementsReq write_achievements_req = 4;
+}
+
+message Rsp {
+    required uint32 request_id = 1;
+    optional AuthenticateRsp authenticate_rsp = 2;
+    optional ReadAchievementsRsp read_achievements_rsp = 3;
+    optional WriteAchievementsRsp write_achievements_rsp = 4;
+}

@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+package mg.protocol.club_cache;
+
+message ClubCompletedActions {
+    optional uint32 game_id = 1;
+    repeated string action_ids = 2;
+}
+
+message ClubCache {
+    required uint32 version = 1;
+    repeated ClubCompletedActions completed_actions = 6;
+}
+
+enum ClubCacheVersion {
+    ClubCacheVersion_Default = 1;
+}

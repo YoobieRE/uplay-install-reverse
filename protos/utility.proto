@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+package mg.protocol.utility;
+
+message GeoIpReq {
+    
+}
+
+message GeoIpRsp {
+    optional string country_code = 1;
+    optional string continent_code = 2;
+}
+
+message Req {
+    optional GeoIpReq geoip_req = 1;
+}
+
+message Rsp {
+    optional GeoIpRsp geoip_rsp = 1;
+}
+
+message Upstream {
+    optional Req request = 1;
+}
+
+message Downstream {
+    optional Rsp response = 1;
+}

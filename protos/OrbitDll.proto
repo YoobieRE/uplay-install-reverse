@@ -1,0 +1,50 @@
+syntax = "proto2";
+
+package mg.protocol.orbitdll;
+
+message GetLoginDetailsReq {
+    
+}
+
+message GetLoginDetailsRsp {
+    required string username = 1;
+    required string password = 2;
+    required string cdkey = 3;
+}
+
+message GetOsiReq {
+    required uint32 subId = 1;
+}
+
+message GetOsiRsp {
+    optional string pipename = 1;
+    
+    required Status status = 2;
+    enum Status {
+        Ok = 0;
+        Failed = 1;
+    }
+}
+
+message InitReq {
+    required uint32 uplayId = 1;
+}
+
+message InitRsp {
+    required string savegameStoragePath = 1;
+    required bool success = 2;
+}
+
+message Req {
+    required uint32 requestId = 1;
+    optional GetLoginDetailsReq getLoginDetails = 2;
+    optional GetOsiReq getOsi = 3;
+    optional InitReq init = 12;
+}
+
+message Rsp {
+    required uint32 requestId = 1;
+    optional GetLoginDetailsRsp getLoginDetails = 2;
+    optional GetOsiRsp getOsi = 3;
+    optional InitRsp init = 12;
+}

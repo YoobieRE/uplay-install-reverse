@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+package mg.protocol.game_activations_cache;
+
+message ExecutableToken {
+    required uint32 exe_index = 1;
+    optional string game_token = 3;
+}
+
+message GameActivation {
+    required uint32 product_id = 1;
+    repeated ExecutableToken executable_token = 2;
+}
+
+message GameActivationListCache {
+    repeated GameActivation game_activation = 1;
+}

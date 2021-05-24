@@ -1,0 +1,53 @@
+syntax = "proto2";
+
+package mg.protocol.chat_message_data;
+
+message GameSession {
+    optional uint64 id = 1;
+    required bytes game_session_data = 2;
+    required bool joinable = 3;
+}
+
+message GameInvite {
+    required uint32 multiplayer_id = 1;
+    required string product_name = 2;
+    required GameSession game_session = 3;
+    optional string inviter_username = 4;
+}
+
+message GroupInvitation {
+    required string inviter_id = 1;
+    required string invitee_id = 2;
+    optional string inviter_username = 3;
+    optional string invitee_username = 4;
+}
+
+message GroupCancelInvite {
+    required string inviter_id = 1;
+    required string invitee_id = 2;
+    optional string inviter_username = 3;
+    optional string invitee_username = 4;
+}
+
+message GroupJoin {
+    required string joined_user_id = 1;
+    optional string username = 2;
+}
+
+message GroupLeft {
+    required string left_user_id = 1;
+    optional string username = 2;
+}
+
+message GroupNotification {
+    required string group_id = 1;
+    optional GroupInvitation group_invitation = 2;
+    optional GroupJoin group_join = 3;
+    optional GroupLeft group_left = 4;
+    optional GroupCancelInvite group_cancel_invite = 5;
+}
+
+message ChatMessageData {
+    optional GameInvite game_invite = 1;
+    optional GroupNotification group_notification = 2;
+}

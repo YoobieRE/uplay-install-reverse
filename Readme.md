@@ -1,6 +1,6 @@
 # uplay_install.manifest reverse engineering
 
-It seems no one has reverse engineering the Ubisoft Connect/UPlay API, and I have a feeling the `uplay_install.manifest` file is the first step.
+It seems no one has reverse engineered the Ubisoft Connect/UPlay API, and I have a feeling the `uplay_install.manifest` file is the first step.
 
 ## Manifest file structure
 
@@ -14,11 +14,34 @@ The protobuf can be extracted from the manifest by just stripping the first 356 
 
 ## Protobuf schema
 
-The protobuf schema isn't public. It also can't be pulled from the Ubisoft Connect EXEs because they are packed with VMProtect. The Android app doesn't contain this schema either.
+The protobuf schema isn't public. It also can't be pulled from the Ubisoft Connect EXEs because they are packed with VMProtect. However, it is possible to dump the memory of the running Uplay application to extract its protos.
 
-The only way to decode the protobuf data is to manually infer the schema. There are various tools that can help assist with this, but some fields (especially enums) are tough to infer without additional context.
+1. Open Ubisoft Connect, then run the below command to dump the memory (it will be about 500 MB)
 
-The current protobuf schema can be found in `manifest.proto`.
+    ```shell
+    # Run CMD/PowerShell as administrator
+    procdump64.exe -ma upc.exe
+    ```
+
+1. Setup [pbtk](https://github.com/marin-m/pbtk). You won't need the UI (qt) stuff, and it's recommended to install the python dependencies in [pipenv](https://pipenv.pypa.io/en/latest/).
+
+1. Run the binary proto extractor on the memory dump
+
+    ```shell
+    pipenv run python3 extractors/from_binary.py upc.exe_210524_171240.dmp upc_protos
+    ```
+
+1. Grab the .protos that pbtk spits out into a bunch of folders and copy them to this project. You can ignore the Google protos.
+
+    ```shell
+    cp -r upc_protos/*/*.proto ~/my/dir/foo/.
+    ```
+
+1. Convert the protos to python code with `protoc`
+
+    ```shell
+    protoc --python_out=./classes ./protos/*.proto
+    ```
 
 ## Findings
 

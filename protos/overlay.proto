@@ -1,0 +1,291 @@
+syntax = "proto2";
+
+package mg.protocol.overlay;
+
+message GetConfigurationReq {
+    
+}
+
+message GetConfigurationRsp {
+    required string library_path = 1;
+}
+
+message StartReq {
+    required uint32 width = 1;
+    required uint32 height = 2;
+    required uint32 pid = 3;
+}
+
+message StartSuccessRsp {
+    required string shared_memory_name = 1;
+    required string shared_memory_mutex_name = 2;
+    optional bool virtual_controls_enabled = 3;
+}
+
+message StartFailureRsp {
+    
+}
+
+message StartRsp {
+    optional StartSuccessRsp success_rsp = 1;
+    optional StartFailureRsp failure_rsp = 2;
+}
+
+message ResizeReq {
+    required uint32 width = 1;
+    required uint32 height = 2;
+}
+
+message ResizeSuccessRsp {
+    required string shared_memory_name = 1;
+    required string shared_memory_mutex_name = 2;
+}
+
+message ResizeFailureRsp {
+    
+}
+
+message ResizeRsp {
+    optional ResizeSuccessRsp success_rsp = 1;
+    optional ResizeFailureRsp failure_rsp = 2;
+}
+
+message Rectangle {
+    required uint32 top_left_posX = 1;
+    required uint32 top_left_posY = 2;
+    required uint32 bottom_right_posX = 3;
+    required uint32 bottom_right_posY = 4;
+}
+
+message ViewUpdatedRsp {
+    repeated Rectangle dirtyRectangles = 1;
+    required uint32 version = 2;
+}
+
+message FocusEventReq {
+    optional bool focus = 1;
+}
+
+message Win32KeyMessageReq {
+    required int32 message = 1;
+    required int32 w_param = 2;
+    required int32 l_param = 3;
+}
+
+message AppleKeyEventReq {
+    required int32 type = 1;
+    required int32 modifierFlags = 2;
+    required double timestamp = 3;
+    required string characters = 4;
+    required string charactersIgnoringModifiers = 5;
+    required int32 isARepeat = 6;
+    required uint32 keyCode = 7;
+}
+
+message MouseButtonPressedReq {
+    required int32 button = 1;
+}
+
+message MouseButtonReleasedReq {
+    required int32 button = 1;
+}
+
+message MouseDoubleClickReq {
+    required int32 button = 1;
+}
+
+message MouseMovedReq {
+    required int32 x = 1;
+    required int32 y = 2;
+    optional int32 modifiers = 3;
+    optional bool is_virtual = 4;
+}
+
+message MouseWheelMovedReq {
+    required int32 scroll_x = 1;
+    required int32 scroll_y = 2;
+}
+
+message LangChangeReq {
+    optional string langAbbreviate = 1;
+}
+
+message ShowUiReq {
+    
+}
+
+message CloseUiReq {
+    
+}
+
+message RefreshUiReq {
+    
+}
+
+message BufferReadyReq {
+    
+}
+
+message CreateProcessReq {
+    required uint32 pid = 1;
+    required uint32 starterId = 2;
+}
+
+message CreateProcessRsp {
+    required uint32 pid = 1;
+}
+
+message StartStreamPush {
+    required uint32 frame_width = 1;
+    required uint32 frame_height = 2;
+    required uint32 buffer_size = 3;
+    required uint32 frames_per_second = 4;
+    required string buffer_name = 5;
+}
+
+message EndStreamPush {
+    
+}
+
+message VideoFrameReadyReq {
+    required uint32 buffer_index = 1;
+}
+
+message VideoFrameReleasedRsp {
+    required uint32 buffer_index = 1;
+}
+
+message CaptureScreenshotPush {
+    required uint32 frame_width = 1;
+    required uint32 frame_height = 2;
+    required string buffer_name = 3;
+    required uint32 buffer_size = 4;
+}
+
+message UiOpenedPush {
+    required bool success = 1;
+}
+
+message UiClosedPush {
+    required bool success = 1;
+}
+
+message IMEClearCompositionPush {
+    
+}
+
+message IMESelectCandidatePush {
+    required uint32 selected_candidate_index = 1;
+}
+
+message CursorChangePush {
+    required uint32 cursor_id = 1;
+}
+
+message ScreenshotReadyReq {
+    
+}
+
+message ScreenshotCaptureFailureReq {
+    
+}
+
+message VideoCaptureFailureReq {
+    
+}
+
+message IMECommitText {
+    optional string text = 1;
+}
+
+message IMECompositionUnderline {
+    optional int32 from = 1;
+    optional int32 to = 2;
+    optional uint32 color = 3;
+    optional uint32 background_color = 4;
+    optional int32 thick = 5;
+}
+
+message IMESetCompositionReq {
+    optional string text = 1;
+    optional int32 composition_start = 2;
+    repeated IMECompositionUnderline underlines = 3;
+}
+
+message IMECancelCompositionReq {
+    
+}
+
+message IMEUpdateCandidatesReq {
+    repeated string candidates = 1;
+    optional uint32 selected_index = 2;
+}
+
+message Req {
+    optional StartReq start_req = 1;
+    optional ResizeReq resize_req = 2;
+    optional Win32KeyMessageReq win_32_key_message_req = 3;
+    optional AppleKeyEventReq apple_key_event_req = 4;
+    optional MouseButtonPressedReq mouse_button_pressed_req = 5;
+    optional MouseButtonReleasedReq mouse_button_released_req = 6;
+    optional MouseMovedReq mouse_moved_req = 7;
+    optional MouseWheelMovedReq mouse_wheel_moved_req = 8;
+    optional CloseUiReq close_ui_req = 10;
+    optional RefreshUiReq refresh_ui_req = 11;
+    optional GetConfigurationReq get_configuration_req = 12;
+    optional MouseDoubleClickReq mouse_double_click_req = 14;
+    optional BufferReadyReq buffer_ready_req = 15;
+    optional VideoFrameReadyReq video_frame_ready_req = 16;
+    optional ScreenshotReadyReq screenshot_ready_req = 17;
+    optional ScreenshotCaptureFailureReq screenshot_capture_failure_req = 18;
+    optional VideoCaptureFailureReq video_capture_failure_req = 19;
+    optional LangChangeReq lang_change_req = 20;
+    optional UpdateFpsReq update_fps_req = 21;
+    optional FocusEventReq focus_event_req = 22;
+    optional IMECommitText ime_commit_text_req = 23;
+    optional IMESetCompositionReq ime_set_composition_req = 24;
+    optional IMECancelCompositionReq ime_cancel_composition_req = 25;
+    optional IMEUpdateCandidatesReq ime_update_candidates_req = 26;
+}
+
+message Rsp {
+    optional StartRsp start_rsp = 1;
+    optional ResizeRsp resize_rsp = 2;
+    optional ViewUpdatedRsp view_updated_rsp = 3;
+    optional GetConfigurationRsp get_configuration_rsp = 4;
+    optional VideoFrameReleasedRsp video_frame_released_rsp = 6;
+}
+
+message MultipleLogin {
+    
+}
+
+message UserBannedPush {
+    
+}
+
+message Push {
+    optional MultipleLogin multiple_login = 1;
+    optional StartStreamPush start_stream = 2;
+    optional EndStreamPush end_stream = 3;
+    optional CaptureScreenshotPush capture_screenshot = 4;
+    optional CursorChangePush cursor_change = 5;
+    optional UserBannedPush user_banned = 6;
+    optional UiOpenedPush ui_opened = 7;
+    optional UiClosedPush ui_closed = 8;
+    optional IMEClearCompositionPush ime_clear_composition = 9;
+    optional IMESelectCandidatePush ime_select_candidate = 10;
+}
+
+message Upstream {
+    optional Req req = 1;
+}
+
+message Downstream {
+    optional Push push = 1;
+    optional Rsp rsp = 2;
+}
+
+message UpdateFpsReq {
+    required uint32 fps = 1;
+}

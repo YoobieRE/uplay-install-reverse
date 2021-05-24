@@ -1,0 +1,169 @@
+syntax = "proto2";
+
+package mg.protocol.store;
+
+message StoreProduct {
+    optional uint32 product_id = 1;
+    optional bytes configuration = 2;
+    optional bool staging = 3;
+    optional string store_reference = 4;
+    repeated uint32 associations = 5;
+    optional uint32 promotion_score = 6 [default = 1];
+    optional uint32 revision = 7;
+    optional string credentials = 8;
+    repeated uint32 ownership_associations = 9;
+    optional string user_blob = 10;
+    optional StorePartner store_partner = 11;
+}
+
+message StoreProductUpdateInfo {
+    optional uint32 product_id = 1;
+    optional uint32 revision = 2;
+    repeated uint32 ownership_associations = 3;
+}
+
+message Storefront {
+    optional string configuration = 1;
+}
+
+message InitializeReq {
+    optional bool use_staging = 1 [default = false];
+    optional uint32 proto_version = 2;
+    optional uint32 client_ip_override = 99 [deprecated = true];
+}
+
+message InitializeRsp {
+    optional bool success = 1;
+    optional Storefront storefront = 2;
+}
+
+message GetStoreReq {
+    
+}
+
+message GetStoreRsp {
+    required StoreResult result = 1;
+    repeated StoreProduct store_products = 2;
+}
+
+message StoreUpdatedPush {
+    repeated StoreProduct store_products = 1;
+    repeated uint32 removed_products = 2;
+}
+
+message GetDataReq {
+    optional StoreType store_data_type = 1;
+    repeated uint32 product_id = 2;
+}
+
+message GetDataRsp {
+    required StoreResult result = 1;
+    optional StoreType store_data_type = 2;
+    repeated StoreProduct products = 3;
+}
+
+message RevisionsUpdatedPush {
+    optional StoreType store_data_type = 1;
+    repeated StoreProductUpdateInfo update_info = 2;
+    repeated uint32 removed_products = 3;
+}
+
+message IngameStoreCredentials {
+    optional string ubi_ticket = 1;
+    optional string ubi_app_id = 2;
+    optional string sales_token = 3;
+    optional SalesPlatform sales_platform = 4;
+}
+
+message KeyValuePair {
+    optional string key = 1;
+    optional string value = 2;
+}
+
+message CheckoutReq {
+    optional string product_id = 1;
+    optional string price_code = 2;
+    optional string url_redirect_success = 3;
+    optional string url_redirect_failure = 4;
+    optional string language_code = 5;
+    repeated KeyValuePair extra = 6;
+    optional string redirect_locale = 7;
+}
+
+message CheckoutRsp {
+    optional string url = 1;
+    optional bool new_window_flag = 2;
+    optional string redirect_locale_code = 3;
+}
+
+message IngameStoreCheckoutReq {
+    optional IngameStoreCredentials ingame_store_credentials = 1;
+    optional CheckoutReq checkout_req = 2;
+}
+
+message IngameStoreCheckoutRsp {
+    optional StoreResult result = 1;
+    optional CheckoutRsp checkout_rsp = 2;
+}
+
+message Push {
+    optional StoreUpdatedPush store_update = 1;
+    optional RevisionsUpdatedPush revisions_updated_push = 2;
+}
+
+message Req {
+    required uint32 request_id = 1;
+    optional InitializeReq initialize_req = 2;
+    optional GetStoreReq get_store_req = 3;
+    optional GetDataReq get_data_req = 4;
+    optional IngameStoreCheckoutReq ingame_store_checkout_req = 5;
+}
+
+message Rsp {
+    required uint32 request_id = 1;
+    optional InitializeRsp initialize_rsp = 2;
+    optional GetStoreRsp get_store_rsp = 3;
+    optional GetDataRsp get_data_rsp = 4;
+    optional IngameStoreCheckoutRsp ingame_store_checkout_rsp = 5;
+}
+
+message Upstream {
+    optional Req request = 1;
+}
+
+message Downstream {
+    optional Rsp response = 1;
+    optional Push push = 2;
+}
+
+enum StoreProtocolVersion {
+    ProtocolVersion = 3;
+}
+
+enum StoreResult {
+    StoreResponse_Success = 1;
+    StoreResponse_Failure = 2;
+    StoreResponse_ServerTimeOut = 3;
+    StoreResponse_InvalidRequest = 4;
+    StoreResponse_InvalidResponse = 5;
+    StoreResponse_HttpQueueFull = 6;
+    StoreResponse_HttpFailure = 7;
+    StoreResponse_SalesPlatformFailure = 8;
+    StoreResponse_SalesPlatformRedirect = 9;
+    StoreResponse_SalesPlatformAntifraudReject = 10;
+}
+
+enum StorePartner {
+    StorePartner_Demandware = 0;
+    StorePartner_Epicstore = 1;
+}
+
+enum StoreType {
+    StoreType_Upsell = 1;
+    StoreType_Ingame = 2;
+}
+
+enum SalesPlatform {
+    SalesPlatform_Mercury = 1;
+    SalesPlatform_Sigma = 2;
+}

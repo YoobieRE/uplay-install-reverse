@@ -1,0 +1,346 @@
+syntax = "proto2";
+
+package mg.channel;
+
+service ChannelService {
+    rpc CreateChannel(CreateChannelReq) returns (CreateChannelRsp);
+}
+
+message Channel {
+    optional string id = 1;
+    optional string parent_id = 2;
+    optional ChannelType type = 3;
+    optional string name = 5;
+    optional string topic = 6;
+    repeated string recipients = 7;
+    optional string owner_id = 9;
+    optional string application_id = 10;
+}
+
+message Message {
+    optional string message_id = 1;
+    optional string parent_id = 2;
+    optional string channel_id = 3;
+    optional string author_id = 4;
+    optional string text_message = 5;
+    optional uint64 time = 6;
+    optional uint64 updated_timestamp = 7;
+    optional MessageType type = 8;
+    repeated string mentions = 9;
+}
+
+message Invite {
+    optional string id = 1;
+    optional string channel_id = 2;
+    optional string sender_id = 3;
+    optional string receiver_id = 4;
+    optional Channel channel = 5;
+}
+
+message CreateChannelReq {
+    optional string parent_id = 1;
+    optional ChannelType type = 2;
+    optional string name = 3;
+    optional string topic = 4;
+    optional string application_id = 6;
+}
+
+message CreateChannelRsp {
+    optional ResponseCode response_code = 1;
+    optional Channel channel = 2;
+}
+
+message CreatePrivateChannelReq {
+    optional string with_user_id = 1;
+}
+
+message CreatePrivateChannelRsp {
+    optional ResponseCode response_code = 1;
+    optional Channel channel = 2;
+}
+
+message GetChannelByIdReq {
+    optional string channel_id = 1;
+}
+
+message GetChannelByIdRsp {
+    optional ResponseCode response_code = 1;
+    optional Channel channel = 2;
+}
+
+message LeaveChannelReq {
+    optional string channel_id = 1;
+}
+
+message LeaveChannelRsp {
+    optional ResponseCode response_code = 1;
+}
+
+message DeleteChannelReq {
+    optional string channel_id = 1;
+}
+
+message DeleteChannelRsp {
+    optional ResponseCode response_code = 1;
+}
+
+message UpdateChannelReq {
+    optional Channel channel = 1;
+}
+
+message UpdateChannelRsp {
+    optional ResponseCode response_code = 1;
+}
+
+message GetChannelsByUserIdReq {
+    
+}
+
+message GetChannelsByUserIdRsp {
+    optional ResponseCode response_code = 1;
+    repeated Channel channels = 2;
+}
+
+message CreateInviteReq {
+    optional string channel_id = 1;
+    repeated string receiver_id = 2;
+}
+
+message CreateInviteRsp {
+    optional ResponseCode response_code = 1;
+    repeated Invite invites = 2;
+}
+
+message GetInvitesSentReq {
+    
+}
+
+message GetInvitesSentRsp {
+    optional ResponseCode response_code = 1;
+    repeated Invite invites = 2;
+}
+
+message GetInvitesReceivedReq {
+    
+}
+
+message GetInvitesReceivedRsp {
+    optional ResponseCode response_code = 1;
+    repeated Invite invites = 2;
+}
+
+message AcceptInviteReq {
+    optional string invite_id = 1;
+    optional string channel_id = 2;
+}
+
+message AcceptInviteRsp {
+    optional ResponseCode response_code = 1;
+    optional string channel_id = 2;
+}
+
+message DeleteInviteReq {
+    optional string invite_id = 1;
+}
+
+message DeleteInviteRsp {
+    optional ResponseCode response_code = 1;
+}
+
+message SendMessageReq {
+    optional Message message = 1;
+}
+
+message SendMessageRsp {
+    optional ResponseCode response_code = 1;
+    optional Message message = 2;
+}
+
+message GetMessageReq {
+    optional string channel_id = 1;
+    optional string older_than_message_id = 2;
+}
+
+message GetMessageRsp {
+    optional ResponseCode response_code = 1;
+    repeated Message messages = 2;
+    optional bool messages_left = 3;
+}
+
+message EditMessageReq {
+    optional string channel_id = 1;
+    optional string message_id = 2;
+    optional string text_message = 3;
+}
+
+message EditMessageRsp {
+    optional ResponseCode response_code = 1;
+    optional Message message = 2;
+}
+
+message DeleteMessageReq {
+    optional string channel_id = 1;
+    optional string message_id = 2;
+}
+
+message DeleteMessageRsp {
+    optional ResponseCode response_code = 1;
+}
+
+message AckMessageReq {
+    optional string channel_id = 1;
+    optional string message_id = 2;
+}
+
+message AckMessageRsp {
+    optional ResponseCode response_code = 1;
+}
+
+message GetUnreadMessagesReq {
+    
+}
+
+message GetUnreadMessagesRsp {
+    optional ResponseCode response_code = 1;
+    map<string, string> last_acknowledged_message = 2;
+    map<string, string> most_recent_message_in_channel = 3;
+}
+
+message PrivateChannelCreatedEvent {
+    optional Channel channel = 1;
+}
+
+message ChannelUpdatedEvent {
+    optional Channel channel = 1;
+}
+
+message ChannelDeletedEvent {
+    optional string channel_id = 1;
+}
+
+message InviteCreatedEvent {
+    optional Invite invite = 1;
+}
+
+message InviteRevokedEvent {
+    optional string invite_id = 1;
+}
+
+message MessageCreatedEvent {
+    optional Message message = 1;
+}
+
+message MessageUpdatedEvent {
+    optional string channel_id = 1;
+    optional ChannelType channel_type = 2;
+    optional Message message = 3;
+}
+
+message MessageDeletedEvent {
+    optional string channel_id = 1;
+    optional ChannelType channel_type = 2;
+    optional string message_id = 3;
+}
+
+message Req {
+    optional uint32 request_id = 1;
+    optional CreateChannelReq create_channel_req = 2;
+    optional GetChannelByIdReq get_channel_by_id_req = 3;
+    optional LeaveChannelReq leave_channel_req = 4;
+    optional DeleteChannelReq delete_channel_req = 5;
+    optional UpdateChannelReq update_channel_req = 6;
+    optional GetChannelsByUserIdReq get_channels_by_user_id_req = 7;
+    optional CreateInviteReq create_invite_req = 8;
+    optional GetInvitesSentReq get_invites_sent_req = 9;
+    optional GetInvitesReceivedReq get_invites_received_req = 10;
+    optional AcceptInviteReq accept_invite_req = 11;
+    optional DeleteInviteReq delete_invite_req = 12;
+    optional SendMessageReq send_message_req = 13;
+    optional GetMessageReq get_message_req = 14;
+    optional EditMessageReq edit_message_req = 15;
+    optional DeleteMessageReq delete_message_req = 16;
+    optional AckMessageReq ack_message_req = 17;
+    optional CreatePrivateChannelReq create_private_channel_req = 18;
+    optional GetUnreadMessagesReq get_unread_messages_req = 19;
+}
+
+message Rsp {
+    optional uint32 request_id = 1;
+    optional CreateChannelRsp create_channel_rsp = 2;
+    optional GetChannelByIdRsp get_channel_by_id_rsp = 3;
+    optional LeaveChannelRsp leave_channel_rsp = 4;
+    optional DeleteChannelRsp delete_channel_rsp = 5;
+    optional UpdateChannelRsp update_channel_rsp = 6;
+    optional GetChannelsByUserIdRsp get_channels_by_user_id_rsp = 7;
+    optional CreateInviteRsp create_invite_rsp = 8;
+    optional GetInvitesSentRsp get_invites_sent_rsp = 9;
+    optional GetInvitesReceivedRsp get_invites_received_rsp = 10;
+    optional AcceptInviteRsp accept_invite_rsp = 11;
+    optional DeleteInviteRsp delete_invite_rsp = 12;
+    optional SendMessageRsp send_message_rsp = 13;
+    optional GetMessageRsp get_message_rsp = 14;
+    optional EditMessageRsp edit_message_rsp = 15;
+    optional DeleteMessageRsp delete_message_rsp = 16;
+    optional AckMessageRsp ack_message_rsp = 17;
+    optional CreatePrivateChannelRsp create_private_channel_rsp = 18;
+    optional GetUnreadMessagesRsp get_unread_messages_rsp = 19;
+}
+
+message Event {
+    optional uint64 sequence_number = 1;
+    optional ChannelUpdatedEvent channel_updated_event = 2;
+    optional ChannelDeletedEvent channel_deleted_event = 3;
+    optional MessageCreatedEvent message_created_event = 4;
+    optional MessageUpdatedEvent message_updated_event = 5;
+    optional MessageDeletedEvent message_deleted_event = 6;
+    optional InviteCreatedEvent invite_created_event = 7;
+    optional InviteRevokedEvent invite_revoked_event = 8;
+    optional PrivateChannelCreatedEvent private_channel_created_event = 9;
+}
+
+message Upstream {
+    optional Req req = 1;
+}
+
+message Downstream {
+    optional Rsp rsp = 1;
+    optional Event event = 2;
+}
+
+enum ResponseCode {
+    ResponseCode_Success = 200;
+    ResponseCode_BadRequest = 400;
+    ResponseCode_Unauthorized = 401;
+    ResponseCode_Forbidden = 403;
+    ResponseCode_NotFound = 404;
+    ResponseCode_InternalServerError = 500;
+    ResponseCode_GatewayTimeout = 504;
+}
+
+enum Permission {
+    Permission_SendMessages = 1;
+    Permission_ManageChannel = 2;
+    Permission_ViewChannel = 3;
+    Permission_ManageMessages = 4;
+    Permission_CreateInvite = 5;
+    Permission_KickMembers = 6;
+    Permission_BanMembers = 7;
+    Permission_ChangeTopic = 8;
+    SuperUser_DeleteChannel = 50;
+}
+
+enum ChannelType {
+    ChannelType_None = 0;
+    ChannelType_DM = 1;
+    ChannelType_Group = 2;
+    ChannelType_Party = 3;
+}
+
+enum MessageType {
+    MessageType_Default = 0;
+    MessageType_UserJoined = 1;
+    MessageType_UserLeft = 2;
+    MessageType_GameInvite = 3;
+    MessageType_UserInvite = 4;
+    MessageType_ChannelNameChange = 5;
+}

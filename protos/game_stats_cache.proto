@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package mg.protocol.game_stats_cache;
+
+message GameStatsCard {
+    optional string space_id = 1;
+    optional string json = 2;
+}
+
+message GameStatsCache {
+    required uint32 version = 1;
+    repeated GameStatsCard player_stats_cards = 2;
+    repeated GameStatsCard community_stats_cards = 3;
+}

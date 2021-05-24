@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package mg.protocol.uplayprotocol;
+
+message Req {
+    required string protocol = 1;
+    optional string environment = 2;
+}
+
+message Rsp {
+    
+}

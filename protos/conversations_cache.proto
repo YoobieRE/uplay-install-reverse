@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package mg.protocol.conversations_cache;
+
+message ConversationsCache {
+    required uint32 version = 1;
+    repeated string channelIds = 2;
+}
+
+enum ConversationsCacheVersion {
+    ConversationsCacheVersion_Default = 2;
+}

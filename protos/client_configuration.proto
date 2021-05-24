@@ -1,0 +1,54 @@
+syntax = "proto2";
+
+package mg.protocol.client_configuration;
+
+import "proto_demux/demux.proto";
+
+message BuildVersion {
+    required uint32 version_number = 1;
+}
+
+message GetStatisticsStatusReq {
+    repeated BuildVersion build_versions = 1;
+}
+
+message GetStatisticsStatusRsp {
+    repeated BuildVersion enabled_build_versions = 1;
+}
+
+message GetPatchInfoReq {
+    required string patch_track_id = 1;
+    required bool test_config = 2;
+    optional uint32 track_type = 3;
+}
+
+message GetPatchInfoRsp {
+    required bool success = 1;
+    required string patch_track_id = 2;
+    required bool test_config = 3;
+    required string patch_base_url = 4;
+    required uint32 latest_version = 5;
+    optional uint32 track_type = 6;
+}
+
+message Req {
+    required uint32 request_id = 1;
+    optional demux.GetPatchInfoReq get_patch_info_req = 2;
+    optional GetStatisticsStatusReq get_statistics_status_req = 3;
+    optional GetPatchInfoReq get_patch_info_req_v2 = 4;
+}
+
+message Rsp {
+    required uint32 request_id = 1;
+    optional demux.GetPatchInfoRsp get_patch_info_rsp = 2;
+    optional GetStatisticsStatusRsp get_statistics_status_rsp = 3;
+    optional GetPatchInfoRsp get_patch_info_rsp_v2 = 4;
+}
+
+message Upstream {
+    optional Req request = 1;
+}
+
+message Downstream {
+    optional Rsp response = 1;
+}
