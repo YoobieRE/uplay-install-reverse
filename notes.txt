@@ -2,9 +2,9 @@
 
 http://uplaypc-s-ubisoft.cdn.ubi.com/uplaypc/downloads/3515/slices_v3/d/4D6EB1E526D38615545462D425D723CD53EA6C51
         ?_tkn_=exp=1621790115
-        ~acl=%2fuplaypc%2fdownloads%2f3515%2fslices_v3%2fd%2f4D6EB1E526D38615545462D425D723CD53EA6C51
-        ~data=e0ef48e3-1a89-419e-80c8-a008ef16379a
-        ~hmac=8ac6adf9e358dde281c067425a5782a9f90ff57169e9cdbb5494fc48fba07dda
+        ~acl=/uplaypc/downloads/3515/slices_v3/d/4D6EB1E526D38615545462D425D723CD53EA6C51
+        ~data=e0ef48e3-1a89-419e-80c8-a008ef16379a  <- userId guid
+        ~hmac=8ac6adf9e358dde281c067425a5782a9f90ff57169e9cdbb5494fc48fba07dda <- Akamai AMD https://learn.akamai.com/en-us/webhelp/adaptive-media-delivery/adaptive-media-delivery-implementation-guide/GUID-041AEFDE-7E25-4AD8-B6C4-73F1B7200F02.html
 
 0x000000008
 ???

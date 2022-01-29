@@ -7,9 +7,9 @@ name = "pypi"
 blackboxprotobuf = "*"
 protobuf-inspector = "*"
 protobuf = "*"
+akamai-edgeauth = "*"
+requests = "*"
 
 [dev-packages]
 autopep8 = "*"
 
-[requires]
-python_version = "3.9"

@@ -6,12 +6,9 @@ from google.protobuf.json_format import MessageToJson
 from google.protobuf.message import DecodeError
 from google.protobuf import text_format
 import classes.protos.download_pb2 as Download
+import classes.protos.ownership_cache_pb2 as OwnershipCache
 import json
 
-def print_sample(plaintextBytes, cipher):
-    plaintext = plaintextBytes.decode()
-    sample = plaintextBytes[:300]
-    print(cipher + ":\n" + sample)
 
 MANIFEST_FILE = 'files/wd1_uplay_install.manifest'
 PAYLOAD_START = 356
@@ -37,6 +34,16 @@ with open(MANIFEST_FILE + '.json', 'w') as jsfile:
     actual_json_text = MessageToJson(manifest)
     jsfile.write( actual_json_text )
 
+# DECODE Ubisoft Game Launcher\cache\ownership\{guid} cache file
+
+OWNERSHIP_START = 264
+ownership_bytes = open('files/ownership.bin', mode='rb').read()
+ownership_proto = ownership_bytes[OWNERSHIP_START:]
+manifest = OwnershipCache.OwnershipCache()
+manifest.ParseFromString(ownership_proto)
+with open('files/ownership.json', 'w') as jsfile:
+    actual_json_text = MessageToJson(manifest)
+    jsfile.write( actual_json_text )
 # Types: https://github.com/ydkhatri/blackboxprotobuf/blob/master/blackboxprotobuf/lib/types/type_maps.py#L29
 # typedef = json.loads(open('combined.typedef.json', mode='r').read())
 
